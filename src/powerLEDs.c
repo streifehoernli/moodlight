@@ -5,7 +5,7 @@
  *
  * All the functions needed for the current control of the power LEDs
  *
- * Prefix: PWR
+ * Prefix: PWR 
  *
  * @todo Write the description of the implemented LED driver solutions.
  *
