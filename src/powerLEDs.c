@@ -14,7 +14,7 @@
  *
  * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
  * @date 15.7.2015
- *****************************************************************************/ 
+ *****************************************************************************/
 #include "em_cmu.h"
 #include "em_gpio.h"
 #include "em_adc.h"
@@ -62,6 +62,9 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 #define PWR_4_FET_PIN			2			///< Pin of FET for solution 4
 #define PWR_4_ACMP_PORT		gpioPortC		///< Port of ACMP for solution 4
 #define PWR_4_ACMP_PIN			5			///< Pin of ACMP for solution 4
+
+#define PWR_3_TIM0_PORT     gpioPortD
+#define PWR_3_TIM0_PIN          1
 
 /** @todo Define all the solution specific defines. */
 
@@ -215,9 +218,10 @@ void PWR_init(void) {
 	/** @todo Initialize the microcontroller peripherals
 	 * for each LED driver solution. */
 
-
 	//32Mhz Clock -> 32kHz with Dutycycle 1/2 -> values 1000 and 500
 	TIMER0_PWM_init(1000, 500);
+	//Pulldown Output for Timer
+	GPIO_PinModeSet(PWR_3_TIM0_PORT, PWR_3_TIM0_PIN, gpioModePushPull, 0);
 	//DAC Max value = 4013 when 1.25V reference is used
 	DAC0_init();
 
