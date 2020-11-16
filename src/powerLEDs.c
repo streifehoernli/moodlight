@@ -5,7 +5,7 @@
  *
  * All the functions needed for the current control of the power LEDs
  *
- * Prefix: PWR 
+ * Prefix: PWR
  *
  * @todo Write the description of the implemented LED driver solutions.
  *
@@ -15,8 +15,6 @@
  * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
  * @date 15.7.2015
  *****************************************************************************/ 
-
-
 #include "em_cmu.h"
 #include "em_gpio.h"
 #include "em_adc.h"
@@ -67,7 +65,9 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 
 /** @todo Define all the solution specific defines. */
 
-/** @todo Define all the solution specific variables. */
+#define DAC_MAX_VALUE     4013
+
+/** @todo Define all the solution specific variables.  */
 
 
 /** Avoid rounding issues in intermediate calculations
@@ -98,6 +98,63 @@ const int32_t PWR_conversion_input[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
  * Functions
  *****************************************************************************/
 
+/** ***************************************************************************
+ * @brief Initialize DAC0 channel 1
+ *
+ *****************************************************************************/
+void DAC0_init(void) {
+  /* DAC_clock_frequency < 1MHz */
+    uint32_t ADC_clock_frequency = 1000000; // 1MHz is the upper limit
+    CMU_ClockEnable(cmuClock_DAC0, true); // enable DAC clock
+    /* load default values for general DAC configuration */
+    DAC_Init_TypeDef DACinit = DAC_INIT_DEFAULT;
+    /* calculate the prescaler value */
+    DACinit.prescale = DAC_PrescaleCalc(ADC_clock_frequency, 0);
+    DACinit.reference = dacRef1V25;      // use internal 1.25V reference
+    DAC_Init(DAC0, &DACinit);       // write configuration registers
+    /* load default values for DAC channel configuration */
+    DAC_InitChannel_TypeDef DACinitChannel = DAC_INITCHANNEL_DEFAULT;
+
+    //Channel 1 (Solution 4)
+    DAC_InitChannel(DAC0, &DACinitChannel, 1);  // write channel 1 configuration
+    DAC_Enable(DAC0, 1, true);        // enable channel 1
+    DAC0->CH1DATA = 0;            // output value for channel 1
+
+    //Channel 0 (Solution 3)
+    DAC_InitChannel(DAC0, &DACinitChannel, 0);  // write channel 0 configuration
+    DAC_Enable(DAC0, 0, true);        // enable channel 0
+    DAC0->CH0DATA = 4013;
+}
+
+void DAC0_write(uint32_t value_out) {
+  DAC0->CH1DATA = value_out;        // output value for channel 1
+}
+
+
+/** ***************************************************************************
+ * @brief Initialize TIMER0 in PWM mode and activate overflow interrupt.
+ * @param [in] value_top = PWM period time
+ * @param [in] value_compare = PWM active time of channel 0
+ * duty_cycle = value_compare / value_top
+ * @n 3 compare/capture channels are available on this timer.
+ *****************************************************************************/
+void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
+  CMU_ClockEnable(cmuClock_TIMER0, true); // enable timer clock
+  /* load default values for general TIMER configuration */
+  TIMER_Init_TypeDef timerInit = TIMER_INIT_DEFAULT;
+  TIMER_Init(TIMER0, &timerInit);     // init and start the timer
+  TIMER_TopSet(TIMER0, value_top);    // TOP defines PWM period
+  /* load default values for compare/capture channel configuration */
+  TIMER_InitCC_TypeDef timerInitCC = TIMER_INITCC_DEFAULT;
+  timerInitCC.mode = timerCCModePWM;    // configure as PWM channel
+  TIMER_InitCC(TIMER0, 0, &timerInitCC);  // CC channel 0 is used
+  TIMER_CompareSet(TIMER0, 0, value_compare); // CC value defines PWM active time
+  /* route output to location #3 and enable output CC0 */
+  TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC0PEN);
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);    // clear pending timer interrupts
+  TIMER_IntEnable(TIMER0, TIMER_IF_OF); // enable timer overflow interrupt
+  NVIC_EnableIRQ(TIMER0_IRQn);      // enable timer interrupts
+}
 
 /** ***************************************************************************
  * @brief Set the set point of the selected power LED driver.
@@ -158,8 +215,16 @@ void PWR_init(void) {
 	/** @todo Initialize the microcontroller peripherals
 	 * for each LED driver solution. */
 
-}
 
+	//32Mhz Clock -> 32kHz with Dutycycle 1/2 -> values 1000 and 500
+	TIMER0_PWM_init(1000, 500);
+	//DAC Max value = 4013 when 1.25V reference is used
+	DAC0_init();
+
+	//Solution 4
+
+
+}
 
 /** ***************************************************************************
  * @brief TIMER0 interrupt handler.

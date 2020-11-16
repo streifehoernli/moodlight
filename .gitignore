@@ -50,3 +50,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+*/'GNU ARM v7.2.1 - Debug'/*
