@@ -53,7 +53,7 @@
 		<link>
 			<name>emlib/em_acmp.c</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_acmp.c</locationURI>
+			<location>C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_acmp.c</location>
 		</link>
 		<link>
 			<name>emlib/em_assert.c</name>
@@ -88,7 +88,7 @@
 		<link>
 			<name>emlib/em_leuart.c</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_leuart.c</locationURI>
+			<location>C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_leuart.c</location>
 		</link>
 		<link>
 			<name>emlib/em_rtc.c</name>
@@ -103,7 +103,7 @@
 		<link>
 			<name>emlib/em_timer.c</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_timer.c</locationURI>
+			<location>C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/emlib/src/em_timer.c</location>
 		</link>
 		<link>
 			<name>emlib/em_usart.c</name>
