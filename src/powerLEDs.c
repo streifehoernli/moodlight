@@ -76,7 +76,7 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 /** @todo Define all the solution specific defines. */
 
 #define DAC_MAX_VALUE_SOL3     4013   //4013 for 1.225V --> 0.375V after R1
-#define DAC_MAX_VALUE_SOL4     300   //2293 for 0V 0.7V --> 0.35V after R12
+#define DAC_MAX_VALUE_SOL4     2000   //2293 for 0V 0.7V --> 0.35V after R12
 
 /** @todo Define all the solution specific variables.  */
 
@@ -110,6 +110,29 @@ const int32_t PWR_conversion_input[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
  *****************************************************************************/
 
 /** ***************************************************************************
+ * @brief Set, clear and toggle a GPIO
+ * @param [in] port of GPIO
+ * @param [in] pin of GPIO
+ *****************************************************************************/
+// GPIO set function
+void GPIO_setPin(uint32_t port, uint32_t pin) {
+  GPIO_PinOutSet(port, pin);      // using EMLIB function
+  GPIO->P[port].DOUTSET = 1 << pin; // same but with CMSIS (faster)
+}
+// GPIO clear function
+void GPIO_clearPin(uint32_t port, uint32_t pin) {
+  GPIO_PinOutClear(port, pin);    // using EMLIB function
+  GPIO->P[port].DOUTCLR = 1 << pin; // same but with CMSIS (faster)
+}
+
+
+void DAC0_CH0_write(uint32_t value_out) {
+  DAC0->CH0DATA = value_out;        // output value for channel 0
+}
+void DAC0_CH1_write(uint32_t value_out) {
+  DAC0->CH1DATA = value_out;        // output value for channel 1
+}
+/** ***************************************************************************
  * @brief Initialize DAC0 channel 1
  *
  *****************************************************************************/
@@ -137,9 +160,7 @@ void DAC0_init(void) {
     DAC0->CH1DATA = DAC_MAX_VALUE_SOL4;   // output value for channel 1
 }
 
-void DAC0_write(uint32_t value_out) {
-  DAC0->CH1DATA = value_out;        // output value for channel 1
-}
+
 
 
 /** ***************************************************************************
@@ -149,8 +170,7 @@ void DAC0_write(uint32_t value_out) {
  * duty_cycle = value_compare / value_top
  * @n 3 compare/capture channels are available on this timer.
  *****************************************************************************/
-void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0,
-                     uint32_t value_compare_CC1) {
+void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0) {
   CMU_ClockEnable(cmuClock_TIMER0, true); // enable timer clock
   /* load default values for general TIMER configuration (both solutions)*/
   TIMER_Init_TypeDef timerInit = TIMER_INIT_DEFAULT;
@@ -165,18 +185,10 @@ void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0,
   TIMER_CompareSet(TIMER0, 0, value_compare_CC0); // CC value defines PWM active time
   /* route output to location #3 and enable output CC0 */
   TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC0PEN);
-  /* load values for CC1 compare/capture channel configuration, solution 4 */
-  timerInitCC.mode = timerCCModePWM;    // configure as PWM channel
-  TIMER_InitCC(TIMER0, 1, &timerInitCC);  // CC channel 0 is used
-  TIMER_CompareSet(TIMER0, 1, value_compare_CC1); // CC value defines PWM active time
-  /* route output to location #3 and enable output CC1 */
-  TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC1PEN);
 
   NVIC_ClearPendingIRQ(TIMER0_IRQn);    // clear pending timer interrupts
   TIMER_IntEnable(TIMER0, TIMER_IF_OF); // enable timer overflow interrupt
   NVIC_EnableIRQ(TIMER0_IRQn);      // enable timer interrupts
-  /* route output to location #3 and enable output CC0 */
-
 
 }
 
@@ -223,10 +235,12 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 			/** @todo Calculate and set LED driver current for this HW solution. */
 			break;
 		case 3:
-			/** @todo Calculate and set LED driver current for this HW solution. */
+			/** @todo Calculate and set DAC Value of solution 3. */
+		  DAC0_CH0_write((value*64460)>>12);
 			break;
 		case 4:
-			/** @todo Calculate and set LED driver current for this HW solution. */
+			/** @todo Calculate and set DAC Value for solution 4. */
+		  DAC0_CH1_write((value*36832)>>12);
 			break;
 		}
 	}
@@ -262,7 +276,7 @@ void PWR_init(void) {
 	//32Mhz Clock -> 32kHz -> value 1000
 	//Dutycycle solution 3 = 1/2 -> value 500
 	//Dutycycle solution 4 = 1/5 -> value 200
-	TIMER0_PWM_init(1000, 500, 170);
+	TIMER0_PWM_init(2000, 1000);
 
 
 	//Pulldown Output for Timers (solution 3 & 4)
@@ -297,7 +311,8 @@ void TIMER0_IRQHandler(void) {
 	/** @todo Execute solution specific control loops,
 	 * calculate and set LED driver current for the HW,
 	 * if applicable. */
-
+	//set output pin
+	GPIO_setPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
 
 	SL_Off(SL_0_PORT, SL_0_PIN);				// stop for timing measurement
 }
@@ -319,7 +334,9 @@ void PWR_ACMP_IRQHandler(void) {
 
 		/** @todo Only needed, if ACMP0 is used in one solution.
 		 * The whole function can be deleted otherwise. */
-
+		//clear output pin
+		GPIO_clearPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
 	}
 }
+
 
