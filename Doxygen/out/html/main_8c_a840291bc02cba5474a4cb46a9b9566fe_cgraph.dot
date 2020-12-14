@@ -1,0 +1,42 @@
+digraph "main"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="main function"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="CAPSENSE_Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$touchslider_8c.html#a9cc00a748bf5cab4ca2e987e07b17566",tooltip="Initializes the capacative sense system. Capacative sensing uses two timers: TIMER1 and TIMER1 as wel..."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="COM_Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$communication_8c.html#a75e517498713565e7099f175f2a70500",tooltip="Initialize the low energy UART."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="INIT_XOclocks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$globals_8c.html#a6722aa896fe7c90c4e283f433ea7985d",tooltip="Start crystal oscillators and use these clock sources."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="PB_Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$pushbuttons_8c.html#a4dfda756d68c9bfd03813dbb95459c60",tooltip="Setup GPIO for the pushbuttons."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="PWR_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#a2645a97196e2d49cae6faa63771813b8",tooltip="Start all the power LED drivers."];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ACMP0_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#a782e09892d9ac0f93fca3715749fff10",tooltip="Initialize comparator ACMP0 and activate rising edge interrupt.   Compare input on channel 5 with sca..."];
+  Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="DAC0_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#a396397a0f42d53d9f0942d118572017a",tooltip="Initialize DAC0 channel 1."];
+  Node6 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="TIMER0_PWM_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#abc665a8a2038b3c5f124399547b84eab",tooltip="Initialize TIMER0 in PWM mode and activate overflow interrupt."];
+  Node1 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="SL_Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$signal_l_e_ds_8c.html#a14455a91dae7fbf143480ab20f435df7",tooltip="Setup GPIO for the signal LEDs."];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="UI_FSM_event",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a50df69c8866e000377a8bc7dbe685a58",tooltip="User interface finite state machine: Checks for events."];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="UI_FSM_event_Pushbutton",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a6aa0164fdca845cfa640d17e630f6d65",tooltip="Part of the user interface finite state machine: Pushbutton events."];
+  Node11 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="UI_FSM_event_RemoteControl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a8fb86f2839178b01686517fecdfdf3b6",tooltip="Part of the user interface finite state machine: Remote control events."];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="COM_RX_Available",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$communication_8c.html#a432854d04e6bb697d5688acfdb367e27",tooltip="Check if a new string has been received."];
+  Node13 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="COM_RX_GetData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$communication_8c.html#a83892c246e07863f8488c2b5eded4fca",tooltip="Get the received data from the serial interface."];
+  Node11 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="UI_FSM_event_Touch",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a15f87a06f768b9692b824c10a9c709df",tooltip="Part of the user interface finite state machine: Touch events."];
+  Node16 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="CAPSENSE_Sense",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$touchslider_8c.html#a053d58010d19241662916216a0327ad6",tooltip="This function iterates through all the capsensors and reads and initiates a reading...."];
+  Node1 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="UI_FSM_state_value",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a0b01a6916c8c2e227ffd51e34a7cc87b",tooltip="User interface finite state machine: Handled the events."];
+}

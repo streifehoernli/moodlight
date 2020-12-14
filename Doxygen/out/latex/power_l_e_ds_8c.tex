@@ -1,0 +1,375 @@
+\hypertarget{power_l_e_ds_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/power\+L\+E\+Ds.c File Reference}
+\label{power_l_e_ds_8c}\index{C:/gitrepo/moodlight/src/powerLEDs.c@{C:/gitrepo/moodlight/src/powerLEDs.c}}
+
+
+Power L\+E\+Ds.  
+
+
+{\ttfamily \#include \char`\"{}em\+\_\+cmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+gpio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+adc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+dac.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+acmp.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+timer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+letimer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}power\+L\+E\+Ds.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}signal\+L\+E\+Ds.\+h\char`\"{}}\newline
+Include dependency graph for power\+L\+E\+Ds.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a63f148c6cf1709d8f7969c870479adae}\label{power_l_e_ds_8c_a63f148c6cf1709d8f7969c870479adae}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a63f148c6cf1709d8f7969c870479adae}{P\+W\+R\+\_\+current\+\_\+max}}~350
+\begin{DoxyCompactList}\small\item\em Max current in mA. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_aab8056b9ce8aecaa89f41d6e7e037ecc}{P\+W\+R\+\_\+\+D\+A\+C\+\_\+\+P\+O\+RT}}~gpio\+PortB
+\begin{DoxyCompactList}\small\item\em Port of D\+AC for solution 3 \& 4. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a533c426597695c6bb66eea1feae6ede8}\label{power_l_e_ds_8c_a533c426597695c6bb66eea1feae6ede8}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a533c426597695c6bb66eea1feae6ede8}{P\+W\+R\+\_\+3\+\_\+\+D\+A\+C\+\_\+\+P\+IN}}~11
+\begin{DoxyCompactList}\small\item\em Pin of D\+AC for solution 3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_afffd62914ba1e95e91b4e9e60cfec4aa}\label{power_l_e_ds_8c_afffd62914ba1e95e91b4e9e60cfec4aa}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_afffd62914ba1e95e91b4e9e60cfec4aa}{P\+W\+R\+\_\+4\+\_\+\+D\+A\+C\+\_\+\+P\+IN}}~12
+\begin{DoxyCompactList}\small\item\em Pin of D\+AC for solution 3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_aca5b6023685e889f650942bce2cff8eb}\label{power_l_e_ds_8c_aca5b6023685e889f650942bce2cff8eb}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_aca5b6023685e889f650942bce2cff8eb}{P\+W\+R\+\_\+\+A\+C\+M\+P\+\_\+\+P\+O\+RT}}~gpio\+PortC
+\begin{DoxyCompactList}\small\item\em Port of A\+C\+MP for solution 4. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_aa841eb421f1933ea510e3234523582de}\label{power_l_e_ds_8c_aa841eb421f1933ea510e3234523582de}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_aa841eb421f1933ea510e3234523582de}{P\+W\+R\+\_\+4\+\_\+\+A\+C\+M\+P\+\_\+\+P\+I\+N\+\_\+\+N\+EG}}~5
+\begin{DoxyCompactList}\small\item\em Pin of A\+C\+M\+P-\/ for solution 4. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a885dd7869142250fb52f4c8b3ee6c603}\label{power_l_e_ds_8c_a885dd7869142250fb52f4c8b3ee6c603}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a885dd7869142250fb52f4c8b3ee6c603}{P\+W\+R\+\_\+4\+\_\+\+A\+C\+M\+P\+\_\+\+P\+I\+N\+\_\+\+P\+OS}}~4
+\begin{DoxyCompactList}\small\item\em Pin of A\+C\+M\+P-\/ for solution 4. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a0a535f21b2dfe79945ebfd82005130c8}\label{power_l_e_ds_8c_a0a535f21b2dfe79945ebfd82005130c8}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a0a535f21b2dfe79945ebfd82005130c8}{P\+W\+R\+\_\+\+T\+I\+M0\+\_\+\+P\+O\+RT}}~gpio\+PortD
+\begin{DoxyCompactList}\small\item\em Port of T\+I\+M\+E\+Rs for solution 3 \& 4. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a613cfb606d4567173347f20d2618c0b2}\label{power_l_e_ds_8c_a613cfb606d4567173347f20d2618c0b2}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a613cfb606d4567173347f20d2618c0b2}{P\+W\+R\+\_\+3\+\_\+\+T\+I\+M0\+\_\+\+P\+IN}}~1
+\begin{DoxyCompactList}\small\item\em Pin of T\+I\+M\+ER for solution 3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a89cc19d239d42eeeee0998ae56c94dad}\label{power_l_e_ds_8c_a89cc19d239d42eeeee0998ae56c94dad}} 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a89cc19d239d42eeeee0998ae56c94dad}{P\+W\+R\+\_\+4\+\_\+\+T\+I\+M0\+\_\+\+P\+IN}}~2
+\begin{DoxyCompactList}\small\item\em Pin of T\+I\+M\+ER for solution 4. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_a7e73ad5596f8784e5fbd809c2a3f5603}{D\+A\+C\+\_\+\+M\+A\+X\+\_\+\+V\+A\+L\+U\+E\+\_\+\+S\+O\+L3}}~1900
+\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a71eb506ff7544d7088dfa71327e69b57}\label{power_l_e_ds_8c_a71eb506ff7544d7088dfa71327e69b57}} 
+\#define {\bfseries D\+A\+C\+\_\+\+M\+A\+X\+\_\+\+V\+A\+L\+U\+E\+\_\+\+S\+O\+L4}~2293
+\item 
+\#define \mbox{\hyperlink{power_l_e_ds_8c_ae7e35ae4f79c3d31c745bce1a4544848}{P\+W\+R\+\_\+conversion\+\_\+shift}}~12
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_aa9b8e75aa4a04e76d0e033692a8bf2b6}{G\+P\+I\+O\+\_\+set\+Pin}} (uint32\+\_\+t port, uint32\+\_\+t pin)
+\begin{DoxyCompactList}\small\item\em Set, clear and toggle a G\+P\+IO. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_acc6b8a773dbdc00ea99d30278cb5f98f}\label{power_l_e_ds_8c_acc6b8a773dbdc00ea99d30278cb5f98f}} 
+void {\bfseries G\+P\+I\+O\+\_\+clear\+Pin} (uint32\+\_\+t port, uint32\+\_\+t pin)
+\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_a702518bbb9d3a1920f5443e688247d32}\label{power_l_e_ds_8c_a702518bbb9d3a1920f5443e688247d32}} 
+void {\bfseries D\+A\+C0\+\_\+\+C\+H0\+\_\+write} (uint32\+\_\+t value\+\_\+out)
+\item 
+\mbox{\Hypertarget{power_l_e_ds_8c_ae3ebc5978288eda8fddeaeadd4bd17ce}\label{power_l_e_ds_8c_ae3ebc5978288eda8fddeaeadd4bd17ce}} 
+void {\bfseries D\+A\+C0\+\_\+\+C\+H1\+\_\+write} (uint32\+\_\+t value\+\_\+out)
+\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_a396397a0f42d53d9f0942d118572017a}{D\+A\+C0\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize D\+A\+C0 channel 1. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_abc665a8a2038b3c5f124399547b84eab}{T\+I\+M\+E\+R0\+\_\+\+P\+W\+M\+\_\+init}} (uint32\+\_\+t value\+\_\+top, uint32\+\_\+t value\+\_\+compare\+\_\+\+C\+C0)
+\begin{DoxyCompactList}\small\item\em Initialize T\+I\+M\+E\+R0 in P\+WM mode and activate overflow interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_a782e09892d9ac0f93fca3715749fff10}{A\+C\+M\+P0\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize comparator A\+C\+M\+P0 and activate rising edge interrupt. ~\newline
+ Compare input on channel 5 with scaled portion of V\+DD. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_a72833630f0c07e3a7d9c82a8d0b11309}{P\+W\+R\+\_\+set\+\_\+value}} (uint32\+\_\+t solution, int32\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Set the set point of the selected power L\+ED driver. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{power_l_e_ds_8c_a9eaf20ef6f499180a0936368b666b2f2}{P\+W\+R\+\_\+get\+\_\+value}} (uint32\+\_\+t solution)
+\begin{DoxyCompactList}\small\item\em Get the set point of the selected power L\+ED driver. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_a2645a97196e2d49cae6faa63771813b8}{P\+W\+R\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Start all the power L\+ED drivers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_a5f89e5f7418d3a10f49b2faeab3711dd}{T\+I\+M\+E\+R0\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em T\+I\+M\+E\+R0 interrupt handler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{power_l_e_ds_8c_ab02f5d4daeb91b35fbca3abdd48d4999}{P\+W\+R\+\_\+\+A\+C\+M\+P\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em A\+C\+MP interrupt handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \mbox{\hyperlink{power_l_e_ds_8c_a519b3ac4fc6ea20185001b968c25c5b0}{P\+W\+R\+\_\+value}} \mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}
+\item 
+const int32\+\_\+t \mbox{\hyperlink{power_l_e_ds_8c_a6bffe685f5851406c5d150c45171ea8f}{P\+W\+R\+\_\+conversion\+\_\+output}} \mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}
+\item 
+const int32\+\_\+t \mbox{\hyperlink{power_l_e_ds_8c_afcbe24fe73b278dd9eb3678c369a9674}{P\+W\+R\+\_\+conversion\+\_\+input}} \mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Power L\+E\+Ds. 
+
+\DoxyHorRuler{0}
+
+
+All the functions needed for the current control of the power L\+E\+Ds
+
+Prefix\+: P\+WR
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]Write the description of the implemented L\+ED driver solutions.\end{DoxyRefDesc}
+
+
+Board\+: Starter Kit E\+F\+M32-\/\+G8\+X\+X-\/\+S\+TK Device\+: E\+F\+M32\+G890\+F128 (Gecko)
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15.\+7.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{power_l_e_ds_8c_a7e73ad5596f8784e5fbd809c2a3f5603}\label{power_l_e_ds_8c_a7e73ad5596f8784e5fbd809c2a3f5603}} 
+\index{powerLEDs.c@{powerLEDs.c}!DAC\_MAX\_VALUE\_SOL3@{DAC\_MAX\_VALUE\_SOL3}}
+\index{DAC\_MAX\_VALUE\_SOL3@{DAC\_MAX\_VALUE\_SOL3}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{DAC\_MAX\_VALUE\_SOL3}{DAC\_MAX\_VALUE\_SOL3}}
+{\footnotesize\ttfamily \#define D\+A\+C\+\_\+\+M\+A\+X\+\_\+\+V\+A\+L\+U\+E\+\_\+\+S\+O\+L3~1900}
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000004}{Todo}}]Define all the solution specific defines. \end{DoxyRefDesc}
+\mbox{\Hypertarget{power_l_e_ds_8c_ae7e35ae4f79c3d31c745bce1a4544848}\label{power_l_e_ds_8c_ae7e35ae4f79c3d31c745bce1a4544848}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_conversion\_shift@{PWR\_conversion\_shift}}
+\index{PWR\_conversion\_shift@{PWR\_conversion\_shift}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_conversion\_shift}{PWR\_conversion\_shift}}
+{\footnotesize\ttfamily \#define P\+W\+R\+\_\+conversion\+\_\+shift~12}
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000005}{Todo}}]Define all the solution specific variables. ~\newline
+ \end{DoxyRefDesc}
+Avoid rounding issues in intermediate calculations by left-\/shifting input values first, then do the calculations and finally right-\/shifting the output values. ~\newline
+ P\+W\+R\+\_\+conversion\+\_\+shift 12 is equivalent to fixed point calculation in Q19.\+12 \begin{DoxyWarning}{Warning}
+\+: Avoid underflow and overflow of intermediate results! ~\newline
+ Range of int32\+\_\+t = -\/2\textquotesingle{}147\textquotesingle{}483\textquotesingle{}648 ... 2\textquotesingle{}147\textquotesingle{}483\textquotesingle{}647 
+\end{DoxyWarning}
+\mbox{\Hypertarget{power_l_e_ds_8c_aab8056b9ce8aecaa89f41d6e7e037ecc}\label{power_l_e_ds_8c_aab8056b9ce8aecaa89f41d6e7e037ecc}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_DAC\_PORT@{PWR\_DAC\_PORT}}
+\index{PWR\_DAC\_PORT@{PWR\_DAC\_PORT}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_DAC\_PORT}{PWR\_DAC\_PORT}}
+{\footnotesize\ttfamily \#define P\+W\+R\+\_\+\+D\+A\+C\+\_\+\+P\+O\+RT~gpio\+PortB}
+
+
+
+Port of D\+AC for solution 3 \& 4. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000003}{Todo}}]Adapt P\+O\+R\+Ts and P\+I\+Ns for L\+ED driver HW inputs and outputs. \end{DoxyRefDesc}
+ports and pins for L\+ED drivers (with number of solution) \#define P\+W\+R\+\_\+0\+\_\+\+P\+W\+M\+\_\+\+P\+O\+RT gpio\+PortC ///$<$ Port of P\+WM for solution 0 \#define P\+W\+R\+\_\+0\+\_\+\+P\+W\+M\+\_\+\+P\+IN 4 ///$<$ Pin of P\+WM for solution 0 \#define P\+W\+R\+\_\+1\+\_\+\+D\+A\+C\+\_\+\+P\+O\+RT gpio\+PortB ///$<$ Port of D\+AC for solution 1 \#define P\+W\+R\+\_\+1\+\_\+\+D\+A\+C\+\_\+\+P\+IN 12 ///$<$ Pin of D\+AC for solution 1 \#define P\+W\+R\+\_\+2\+\_\+\+A\+D\+C\+\_\+\+P\+O\+RT gpio\+PortD ///$<$ Port of A\+DC for solution 2 \#define P\+W\+R\+\_\+2\+\_\+\+A\+D\+C\+\_\+\+P\+IN 0 ///$<$ Pin of A\+DC for solution 2 \#define P\+W\+R\+\_\+2\+\_\+\+F\+E\+T\+\_\+\+P\+O\+RT gpio\+PortD ///$<$ Port of F\+ET for solution 2 \#define P\+W\+R\+\_\+2\+\_\+\+F\+E\+T\+\_\+\+P\+IN 1 ///$<$ Pin of F\+ET for solution 2 \#define P\+W\+R\+\_\+3\+\_\+\+S\+T\+A\+R\+T\+\_\+\+P\+O\+RT gpio\+PortD ///$<$ Port of S\+T\+A\+RT for solution 3 \#define P\+W\+R\+\_\+3\+\_\+\+S\+T\+A\+R\+T\+\_\+\+P\+IN 3 ///$<$ Pin of S\+T\+A\+RT for solution 3 \#define P\+W\+R\+\_\+4\+\_\+\+F\+E\+T\+\_\+\+P\+O\+RT gpio\+PortD ///$<$ Port of F\+ET for solution 4 \#define P\+W\+R\+\_\+4\+\_\+\+F\+E\+T\+\_\+\+P\+IN 2 ///$<$ Pin of F\+ET for solution 4 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{power_l_e_ds_8c_a782e09892d9ac0f93fca3715749fff10}\label{power_l_e_ds_8c_a782e09892d9ac0f93fca3715749fff10}} 
+\index{powerLEDs.c@{powerLEDs.c}!ACMP0\_init@{ACMP0\_init}}
+\index{ACMP0\_init@{ACMP0\_init}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{ACMP0\_init()}{ACMP0\_init()}}
+{\footnotesize\ttfamily void A\+C\+M\+P0\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize comparator A\+C\+M\+P0 and activate rising edge interrupt. ~\newline
+ Compare input on channel 5 with scaled portion of V\+DD. 
+
+\DoxyHorRuler{0}
+ Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{power_l_e_ds_8c_a396397a0f42d53d9f0942d118572017a}\label{power_l_e_ds_8c_a396397a0f42d53d9f0942d118572017a}} 
+\index{powerLEDs.c@{powerLEDs.c}!DAC0\_init@{DAC0\_init}}
+\index{DAC0\_init@{DAC0\_init}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{DAC0\_init()}{DAC0\_init()}}
+{\footnotesize\ttfamily void D\+A\+C0\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize D\+A\+C0 channel 1. 
+
+\DoxyHorRuler{0}
+ Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{power_l_e_ds_8c_aa9b8e75aa4a04e76d0e033692a8bf2b6}\label{power_l_e_ds_8c_aa9b8e75aa4a04e76d0e033692a8bf2b6}} 
+\index{powerLEDs.c@{powerLEDs.c}!GPIO\_setPin@{GPIO\_setPin}}
+\index{GPIO\_setPin@{GPIO\_setPin}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{GPIO\_setPin()}{GPIO\_setPin()}}
+{\footnotesize\ttfamily void G\+P\+I\+O\+\_\+set\+Pin (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{port,  }\item[{uint32\+\_\+t}]{pin }\end{DoxyParamCaption})}
+
+
+
+Set, clear and toggle a G\+P\+IO. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of G\+P\+IO \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of G\+P\+IO \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{power_l_e_ds_8c_ab02f5d4daeb91b35fbca3abdd48d4999}\label{power_l_e_ds_8c_ab02f5d4daeb91b35fbca3abdd48d4999}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_ACMP\_IRQHandler@{PWR\_ACMP\_IRQHandler}}
+\index{PWR\_ACMP\_IRQHandler@{PWR\_ACMP\_IRQHandler}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_ACMP\_IRQHandler()}{PWR\_ACMP\_IRQHandler()}}
+{\footnotesize\ttfamily void P\+W\+R\+\_\+\+A\+C\+M\+P\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+A\+C\+MP interrupt handler. 
+
+\DoxyHorRuler{0}
+ \begin{DoxyNote}{Note}
+Be aware of the fact that A\+C\+M\+P0 and A\+C\+M\+P1 share the same interrupt service routine \mbox{\hyperlink{touchslider_8c_abd4f5e806b0ea1a2889632e254f8889a}{A\+C\+M\+P0\+\_\+\+I\+R\+Q\+Handler()}}.~\newline
+ This implies that there is no A\+C\+M\+P1\+\_\+\+I\+R\+Q\+Handler().~\newline
+ A\+C\+M\+P1 is used for the touchslider and handled by \mbox{\hyperlink{touchslider_8c_abd4f5e806b0ea1a2889632e254f8889a}{A\+C\+M\+P0\+\_\+\+I\+R\+Q\+Handler()}} directly. ~\newline
+ This \mbox{\hyperlink{power_l_e_ds_8c_ab02f5d4daeb91b35fbca3abdd48d4999}{P\+W\+R\+\_\+\+A\+C\+M\+P\+\_\+\+I\+R\+Q\+Handler()}} handles the A\+C\+M\+P0 interrupt when it is called by \mbox{\hyperlink{touchslider_8c_abd4f5e806b0ea1a2889632e254f8889a}{A\+C\+M\+P0\+\_\+\+I\+R\+Q\+Handler()}} in \mbox{\hyperlink{touchslider_8c}{touchslider.\+c}} ~\newline
+ As part of an interrupt handler this is a time critical section. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000015}{Todo}}]Only needed, if A\+C\+M\+P0 is used in one solution. The whole function can be deleted otherwise. \end{DoxyRefDesc}
+Here is the caller graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{power_l_e_ds_8c_a9eaf20ef6f499180a0936368b666b2f2}\label{power_l_e_ds_8c_a9eaf20ef6f499180a0936368b666b2f2}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_get\_value@{PWR\_get\_value}}
+\index{PWR\_get\_value@{PWR\_get\_value}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_get\_value()}{PWR\_get\_value()}}
+{\footnotesize\ttfamily uint32\+\_\+t P\+W\+R\+\_\+get\+\_\+value (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{solution }\end{DoxyParamCaption})}
+
+
+
+Get the set point of the selected power L\+ED driver. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em solution} & number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value of set point 
+\end{DoxyReturn}
+\mbox{\Hypertarget{power_l_e_ds_8c_a2645a97196e2d49cae6faa63771813b8}\label{power_l_e_ds_8c_a2645a97196e2d49cae6faa63771813b8}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_init@{PWR\_init}}
+\index{PWR\_init@{PWR\_init}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_init()}{PWR\_init()}}
+{\footnotesize\ttfamily void P\+W\+R\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Start all the power L\+ED drivers. 
+
+\DoxyHorRuler{0}
+
+
+All the peripherals are initialized and started for each H\+W/\+SW solution for the L\+ED driver. \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000013}{Todo}}]Initialize the microcontroller peripherals for each L\+ED driver solution. \end{DoxyRefDesc}
+Here is the call graph for this function\+:
+% FIG 5
+Here is the caller graph for this function\+:
+% FIG 6
+\mbox{\Hypertarget{power_l_e_ds_8c_a72833630f0c07e3a7d9c82a8d0b11309}\label{power_l_e_ds_8c_a72833630f0c07e3a7d9c82a8d0b11309}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_set\_value@{PWR\_set\_value}}
+\index{PWR\_set\_value@{PWR\_set\_value}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_set\_value()}{PWR\_set\_value()}}
+{\footnotesize\ttfamily void P\+W\+R\+\_\+set\+\_\+value (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{solution,  }\item[{int32\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Set the set point of the selected power L\+ED driver. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em solution} & number \\
+\hline
+\mbox{\texttt{ in}}  & {\em value} & of set point\\
+\hline
+\end{DoxyParams}
+The L\+ED driver current is also adjusted accordingly. \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000008}{Todo}}]Calculate and set L\+ED driver current for this HW solution. \end{DoxyRefDesc}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000009}{Todo}}]Calculate and set L\+ED driver current for this HW solution. \end{DoxyRefDesc}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000010}{Todo}}]Calculate and set L\+ED driver current for this HW solution. \end{DoxyRefDesc}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000011}{Todo}}]Calculate and set D\+AC Value of solution 3. \end{DoxyRefDesc}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000012}{Todo}}]Calculate and set D\+AC Value for solution 4. \end{DoxyRefDesc}
+\mbox{\Hypertarget{power_l_e_ds_8c_a5f89e5f7418d3a10f49b2faeab3711dd}\label{power_l_e_ds_8c_a5f89e5f7418d3a10f49b2faeab3711dd}} 
+\index{powerLEDs.c@{powerLEDs.c}!TIMER0\_IRQHandler@{TIMER0\_IRQHandler}}
+\index{TIMER0\_IRQHandler@{TIMER0\_IRQHandler}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{TIMER0\_IRQHandler()}{TIMER0\_IRQHandler()}}
+{\footnotesize\ttfamily void T\+I\+M\+E\+R0\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+T\+I\+M\+E\+R0 interrupt handler. 
+
+\DoxyHorRuler{0}
+
+
+~\newline
+ Current measurements, control loops, adjusting P\+WM active times, etc. is done here for several solutions. \begin{DoxyNote}{Note}
+This interrupt handler is time critical. Make sure that the C\+PU time used is shorter than the timer period. ~\newline
+ C\+M\+S\+IS commands are used instead of E\+M\+L\+IB functions, because they run faster. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000014}{Todo}}]Execute solution specific control loops, calculate and set L\+ED driver current for the HW, if applicable. \end{DoxyRefDesc}
+Here is the call graph for this function\+:
+% FIG 7
+\mbox{\Hypertarget{power_l_e_ds_8c_abc665a8a2038b3c5f124399547b84eab}\label{power_l_e_ds_8c_abc665a8a2038b3c5f124399547b84eab}} 
+\index{powerLEDs.c@{powerLEDs.c}!TIMER0\_PWM\_init@{TIMER0\_PWM\_init}}
+\index{TIMER0\_PWM\_init@{TIMER0\_PWM\_init}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{TIMER0\_PWM\_init()}{TIMER0\_PWM\_init()}}
+{\footnotesize\ttfamily void T\+I\+M\+E\+R0\+\_\+\+P\+W\+M\+\_\+init (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{value\+\_\+top,  }\item[{uint32\+\_\+t}]{value\+\_\+compare\+\_\+\+C\+C0 }\end{DoxyParamCaption})}
+
+
+
+Initialize T\+I\+M\+E\+R0 in P\+WM mode and activate overflow interrupt. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em value\+\_\+top} & = P\+WM period time \\
+\hline
+\mbox{\texttt{ in}}  & {\em value\+\_\+compare} & = P\+WM active time of channel 0 duty\+\_\+cycle = value\+\_\+compare / value\+\_\+top ~\newline
+ 3 compare/capture channels are available on this timer. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 8
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{power_l_e_ds_8c_afcbe24fe73b278dd9eb3678c369a9674}\label{power_l_e_ds_8c_afcbe24fe73b278dd9eb3678c369a9674}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_conversion\_input@{PWR\_conversion\_input}}
+\index{PWR\_conversion\_input@{PWR\_conversion\_input}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_conversion\_input}{PWR\_conversion\_input}}
+{\footnotesize\ttfamily const int32\+\_\+t P\+W\+R\+\_\+conversion\+\_\+input\mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}}
+
+Conversion factor from microcontroller-\/input user-\/interface-\/value. Use integer data types only and right-\/shifts instead of divisions for faster code execution (divisions are very time consuming). ~\newline
+ P\+W\+R\+\_\+value = (input\+\_\+value $\ast$ P\+W\+R\+\_\+conversion\+\_\+input) $>$$>$ P\+W\+R\+\_\+conversion\+\_\+shift \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000007}{Todo}}]Define solution specific conversion factors. \end{DoxyRefDesc}
+\mbox{\Hypertarget{power_l_e_ds_8c_a6bffe685f5851406c5d150c45171ea8f}\label{power_l_e_ds_8c_a6bffe685f5851406c5d150c45171ea8f}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_conversion\_output@{PWR\_conversion\_output}}
+\index{PWR\_conversion\_output@{PWR\_conversion\_output}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_conversion\_output}{PWR\_conversion\_output}}
+{\footnotesize\ttfamily const int32\+\_\+t P\+W\+R\+\_\+conversion\+\_\+output\mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}}
+
+Conversion factor from user-\/interface-\/value to microcontroller-\/output. Use integer data types only and right-\/shifts instead of divisions for faster code execution (divisions are very time consuming). ~\newline
+ output\+\_\+value = (P\+W\+R\+\_\+value $\ast$ P\+W\+R\+\_\+conversion\+\_\+output) $>$$>$ P\+W\+R\+\_\+conversion\+\_\+shift \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000006}{Todo}}]Define solution specific conversion factors. \end{DoxyRefDesc}
+\mbox{\Hypertarget{power_l_e_ds_8c_a519b3ac4fc6ea20185001b968c25c5b0}\label{power_l_e_ds_8c_a519b3ac4fc6ea20185001b968c25c5b0}} 
+\index{powerLEDs.c@{powerLEDs.c}!PWR\_value@{PWR\_value}}
+\index{PWR\_value@{PWR\_value}!powerLEDs.c@{powerLEDs.c}}
+\doxysubsubsection{\texorpdfstring{PWR\_value}{PWR\_value}}
+{\footnotesize\ttfamily int32\+\_\+t P\+W\+R\+\_\+value\mbox{[}P\+W\+R\+\_\+\+S\+O\+L\+U\+T\+I\+O\+N\+\_\+\+C\+O\+U\+NT\mbox{]} = \{ 0, 0, 0, 0, 0 \}}
+
+Actual set points for values 

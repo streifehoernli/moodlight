@@ -1,0 +1,221 @@
+\hypertarget{communication_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/communication.c File Reference}
+\label{communication_8c}\index{C:/gitrepo/moodlight/src/communication.c@{C:/gitrepo/moodlight/src/communication.c}}
+
+
+Simple asynchronous communication with just a string as second level buffer.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+device.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+cmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+gpio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+leuart.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}communication.\+h\char`\"{}}\newline
+Include dependency graph for communication.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{communication_8c_a3a1c9763ef7964e40fb0a50651f84026}\label{communication_8c_a3a1c9763ef7964e40fb0a50651f84026}} 
+\#define \mbox{\hyperlink{communication_8c_a3a1c9763ef7964e40fb0a50651f84026}{C\+O\+M\+\_\+\+L\+E\+U\+A\+RT}}~L\+E\+U\+A\+R\+T0
+\begin{DoxyCompactList}\small\item\em U\+A\+RT for communication. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a1f51c9c56e2178dab3b6501a07909019}\label{communication_8c_a1f51c9c56e2178dab3b6501a07909019}} 
+\#define \mbox{\hyperlink{communication_8c_a1f51c9c56e2178dab3b6501a07909019}{C\+O\+M\+\_\+\+C\+L\+O\+CK}}~cmu\+Clock\+\_\+\+L\+E\+U\+A\+R\+T0
+\begin{DoxyCompactList}\small\item\em U\+A\+RT clock. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_ad328c1d3f6335187350c8e2b6a1e2a37}\label{communication_8c_ad328c1d3f6335187350c8e2b6a1e2a37}} 
+\#define \mbox{\hyperlink{communication_8c_ad328c1d3f6335187350c8e2b6a1e2a37}{C\+O\+M\+\_\+\+L\+O\+C\+A\+T\+I\+ON}}~L\+E\+U\+A\+R\+T\+\_\+\+R\+O\+U\+T\+E\+\_\+\+L\+O\+C\+A\+T\+I\+O\+N\+\_\+\+L\+O\+C0
+\begin{DoxyCompactList}\small\item\em TX RX route. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_aac19c8d6b1423b406e48695948114a3d}\label{communication_8c_aac19c8d6b1423b406e48695948114a3d}} 
+\#define \mbox{\hyperlink{communication_8c_aac19c8d6b1423b406e48695948114a3d}{C\+O\+M\+\_\+\+T\+X\+\_\+\+P\+O\+RT}}~gpio\+PortD
+\begin{DoxyCompactList}\small\item\em Port for TX. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_ad763b332c455882ea5145feef2191157}\label{communication_8c_ad763b332c455882ea5145feef2191157}} 
+\#define \mbox{\hyperlink{communication_8c_ad763b332c455882ea5145feef2191157}{C\+O\+M\+\_\+\+T\+X\+\_\+\+P\+IN}}~4
+\begin{DoxyCompactList}\small\item\em Pin for TX. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a2025569ad02460b816212d3be05c5141}\label{communication_8c_a2025569ad02460b816212d3be05c5141}} 
+\#define \mbox{\hyperlink{communication_8c_a2025569ad02460b816212d3be05c5141}{C\+O\+M\+\_\+\+R\+X\+\_\+\+P\+O\+RT}}~gpio\+PortD
+\begin{DoxyCompactList}\small\item\em Port for RX. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_aff8b9ecee6793692b10e017734ccb149}\label{communication_8c_aff8b9ecee6793692b10e017734ccb149}} 
+\#define \mbox{\hyperlink{communication_8c_aff8b9ecee6793692b10e017734ccb149}{C\+O\+M\+\_\+\+R\+X\+\_\+\+P\+IN}}~5
+\begin{DoxyCompactList}\small\item\em Pin for RX. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{communication_8c_a75e517498713565e7099f175f2a70500}{C\+O\+M\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize the low energy U\+A\+RT. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{communication_8c_a32a45f0640497bf8debd2e8066378b2c}{C\+O\+M\+\_\+\+Flush\+\_\+\+Buffers}} (void)
+\begin{DoxyCompactList}\small\item\em Flush all the buffers. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{communication_8c_a432854d04e6bb697d5688acfdb367e27}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Available}} (void)
+\begin{DoxyCompactList}\small\item\em Check if a new string has been received. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{communication_8c_a83892c246e07863f8488c2b5eded4fca}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Get\+Data}} (char $\ast$string, uint32\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Get the received data from the serial interface. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{communication_8c_a7e9a0ab8663a1e74ad64bc850e9322fb}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy}} (void)
+\begin{DoxyCompactList}\small\item\em Check if a string is currently being sent. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{communication_8c_abb47bad2959d7069f50496d46673ff8d}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Put\+Data}} (char $\ast$string, uint32\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Start sending data on serial interface. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{communication_8c_a1b6100ae82f114fbb9ff3c46bbb369c2}{L\+E\+U\+A\+R\+T0\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em L\+E\+U\+A\+R\+T0 RX I\+RQ Handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{communication_8c_accd3ff73e5ec9305a5e3d4541f00bdd1}\label{communication_8c_accd3ff73e5ec9305a5e3d4541f00bdd1}} 
+bool \mbox{\hyperlink{communication_8c_accd3ff73e5ec9305a5e3d4541f00bdd1}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Available\+\_\+\+Flag}} = false
+\begin{DoxyCompactList}\small\item\em received data is available \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a781fe5dda1107618c2ebf6fba03f6ae3}\label{communication_8c_a781fe5dda1107618c2ebf6fba03f6ae3}} 
+char \mbox{\hyperlink{communication_8c_a781fe5dda1107618c2ebf6fba03f6ae3}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Data}} \mbox{[}C\+O\+M\+\_\+\+B\+U\+F\+\_\+\+S\+I\+ZE\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em buffer for received data \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a07dd13c0703f60b232fcae6195869425}\label{communication_8c_a07dd13c0703f60b232fcae6195869425}} 
+bool \mbox{\hyperlink{communication_8c_a07dd13c0703f60b232fcae6195869425}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy\+\_\+\+Flag}} = false
+\begin{DoxyCompactList}\small\item\em busy with sending \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_ac597da53a336c4b38b67acb6653be917}\label{communication_8c_ac597da53a336c4b38b67acb6653be917}} 
+char \mbox{\hyperlink{communication_8c_ac597da53a336c4b38b67acb6653be917}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Data}} \mbox{[}C\+O\+M\+\_\+\+B\+U\+F\+\_\+\+S\+I\+ZE\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em buffer for data to be sent \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a102279f3a9cb069a41479fa509e34926}\label{communication_8c_a102279f3a9cb069a41479fa509e34926}} 
+char \mbox{\hyperlink{communication_8c_a102279f3a9cb069a41479fa509e34926}{T\+X\+\_\+buf}} \mbox{[}C\+O\+M\+\_\+\+B\+U\+F\+\_\+\+S\+I\+ZE\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em transmit buffer \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_a3d589086461401569518fa26d206933f}\label{communication_8c_a3d589086461401569518fa26d206933f}} 
+char \mbox{\hyperlink{communication_8c_a3d589086461401569518fa26d206933f}{R\+X\+\_\+buf}} \mbox{[}C\+O\+M\+\_\+\+B\+U\+F\+\_\+\+S\+I\+ZE\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em receive buffer \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_ae5ec2797d8c8a507838aae2e75ffa0d9}\label{communication_8c_ae5ec2797d8c8a507838aae2e75ffa0d9}} 
+uint8\+\_\+t \mbox{\hyperlink{communication_8c_ae5ec2797d8c8a507838aae2e75ffa0d9}{T\+X\+\_\+index}} = 0
+\begin{DoxyCompactList}\small\item\em transmit buffer index \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{communication_8c_af5769a387740387f391884e46b1f2ffe}\label{communication_8c_af5769a387740387f391884e46b1f2ffe}} 
+uint8\+\_\+t \mbox{\hyperlink{communication_8c_af5769a387740387f391884e46b1f2ffe}{R\+X\+\_\+index}} = 0
+\begin{DoxyCompactList}\small\item\em receive buffer index \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simple asynchronous communication with just a string as second level buffer. 
+
+The code is inspired by A\+N0045 U\+S\+A\+RT or U\+A\+RT Asynchronous mode and by A\+N0017 Low Energy U\+A\+RT ~\newline
+ It uses only the H\+W-\/buffers in connection with T\+X-\/ and R\+X-\/interrupts. ~\newline
+ Overflow handling is not implemented as processing is faster than the baud rate.
+
+\begin{DoxyNote}{Note}
+As the L\+E\+U\+A\+RT runs on a low frequency clock, updating registers takes a while. Synchronization with the high frequency domain may be achieved with flags.
+\end{DoxyNote}
+Prefix\+: C\+OM
+
+Board\+: Starter Kit E\+F\+M32-\/\+G8\+X\+X-\/\+S\+TK Device\+: E\+F\+M32\+G890\+F128 (Gecko)
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15.\+7.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{communication_8c_a32a45f0640497bf8debd2e8066378b2c}\label{communication_8c_a32a45f0640497bf8debd2e8066378b2c}} 
+\index{communication.c@{communication.c}!COM\_Flush\_Buffers@{COM\_Flush\_Buffers}}
+\index{COM\_Flush\_Buffers@{COM\_Flush\_Buffers}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_Flush\_Buffers()}{COM\_Flush\_Buffers()}}
+{\footnotesize\ttfamily void C\+O\+M\+\_\+\+Flush\+\_\+\+Buffers (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Flush all the buffers. 
+
+Could be useful if the parser encounters a syntax error. \mbox{\Hypertarget{communication_8c_a75e517498713565e7099f175f2a70500}\label{communication_8c_a75e517498713565e7099f175f2a70500}} 
+\index{communication.c@{communication.c}!COM\_Init@{COM\_Init}}
+\index{COM\_Init@{COM\_Init}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_Init()}{COM\_Init()}}
+{\footnotesize\ttfamily void C\+O\+M\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the low energy U\+A\+RT. 
+
+Set the clocks, configure the low energy U\+A\+RT, route TX and RX, enable I\+R\+Qs Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{communication_8c_a432854d04e6bb697d5688acfdb367e27}\label{communication_8c_a432854d04e6bb697d5688acfdb367e27}} 
+\index{communication.c@{communication.c}!COM\_RX\_Available@{COM\_RX\_Available}}
+\index{COM\_RX\_Available@{COM\_RX\_Available}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_RX\_Available()}{COM\_RX\_Available()}}
+{\footnotesize\ttfamily bool C\+O\+M\+\_\+\+R\+X\+\_\+\+Available (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if a new string has been received. 
+
+\begin{DoxyReturn}{Returns}
+true = a string has been received and is ready for processing. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{communication_8c_a83892c246e07863f8488c2b5eded4fca}\label{communication_8c_a83892c246e07863f8488c2b5eded4fca}} 
+\index{communication.c@{communication.c}!COM\_RX\_GetData@{COM\_RX\_GetData}}
+\index{COM\_RX\_GetData@{COM\_RX\_GetData}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_RX\_GetData()}{COM\_RX\_GetData()}}
+{\footnotesize\ttfamily void C\+O\+M\+\_\+\+R\+X\+\_\+\+Get\+Data (\begin{DoxyParamCaption}\item[{char $\ast$}]{string,  }\item[{uint32\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Get the received data from the serial interface. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em string} & which has been received \\
+\hline
+\mbox{\texttt{ in}}  & {\em n} & = maximum number of chars \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+A (subsequent) call to \mbox{\hyperlink{communication_8c_a83892c246e07863f8488c2b5eded4fca}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Get\+Data()}} returns an empty string if no new data has been received in the meantime. ~\newline
+ This can be avoided by checking \mbox{\hyperlink{communication_8c_a432854d04e6bb697d5688acfdb367e27}{C\+O\+M\+\_\+\+R\+X\+\_\+\+Available()}}; 
+\end{DoxyNote}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{communication_8c_a7e9a0ab8663a1e74ad64bc850e9322fb}\label{communication_8c_a7e9a0ab8663a1e74ad64bc850e9322fb}} 
+\index{communication.c@{communication.c}!COM\_TX\_Busy@{COM\_TX\_Busy}}
+\index{COM\_TX\_Busy@{COM\_TX\_Busy}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_TX\_Busy()}{COM\_TX\_Busy()}}
+{\footnotesize\ttfamily bool C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if a string is currently being sent. 
+
+\begin{DoxyReturn}{Returns}
+true = sending of a string is still under way. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{communication_8c_abb47bad2959d7069f50496d46673ff8d}\label{communication_8c_abb47bad2959d7069f50496d46673ff8d}} 
+\index{communication.c@{communication.c}!COM\_TX\_PutData@{COM\_TX\_PutData}}
+\index{COM\_TX\_PutData@{COM\_TX\_PutData}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{COM\_TX\_PutData()}{COM\_TX\_PutData()}}
+{\footnotesize\ttfamily void C\+O\+M\+\_\+\+T\+X\+\_\+\+Put\+Data (\begin{DoxyParamCaption}\item[{char $\ast$}]{string,  }\item[{uint32\+\_\+t}]{n }\end{DoxyParamCaption})}
+
+
+
+Start sending data on serial interface. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em string} & to be sent \\
+\hline
+\mbox{\texttt{ in}}  & {\em n} & = maximum number of chars\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+A call to \mbox{\hyperlink{communication_8c_abb47bad2959d7069f50496d46673ff8d}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Put\+Data()}} starts sending the new string immediately even if an previous string has not been completely sent. ~\newline
+ This can be avoided by checking \mbox{\hyperlink{communication_8c_a7e9a0ab8663a1e74ad64bc850e9322fb}{C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy()}}; 
+\end{DoxyNote}
+\mbox{\Hypertarget{communication_8c_a1b6100ae82f114fbb9ff3c46bbb369c2}\label{communication_8c_a1b6100ae82f114fbb9ff3c46bbb369c2}} 
+\index{communication.c@{communication.c}!LEUART0\_IRQHandler@{LEUART0\_IRQHandler}}
+\index{LEUART0\_IRQHandler@{LEUART0\_IRQHandler}!communication.c@{communication.c}}
+\doxysubsubsection{\texorpdfstring{LEUART0\_IRQHandler()}{LEUART0\_IRQHandler()}}
+{\footnotesize\ttfamily void L\+E\+U\+A\+R\+T0\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+L\+E\+U\+A\+R\+T0 RX I\+RQ Handler. 
+
+{\bfseries{RX Data Valid}} is handled as follows\+: ~\newline
+ Copies one char from the R\+X-\/\+HW to the RX buffer. ~\newline
+ \textquotesingle{}\textbackslash{}r\textquotesingle{} and \textquotesingle{}\textbackslash{}n\textquotesingle{} are considered as end of string character and C\+O\+M\+\_\+\+Received\+\_\+\+Request() is called. ~\newline
+ If the buffer is full, it is also handled as end of string.
+
+{\bfseries{TX Buffer Level}} is handled as follows\+: ~\newline
+ If C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy\+\_\+\+Flag is set ~\newline
+ one char at a time is copied from the TX buffer to the T\+X-\/\+HW. ~\newline
+ After sending the string C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy\+\_\+\+Flag is cleared and the buffer level interrupt is disabled. 

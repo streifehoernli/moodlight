@@ -1,0 +1,57 @@
+\hypertarget{communication_8h}{}\doxysection{C\+:/gitrepo/moodlight/src/inc/communication.h File Reference}
+\label{communication_8h}\index{C:/gitrepo/moodlight/src/inc/communication.h@{C:/gitrepo/moodlight/src/inc/communication.h}}
+
+
+See communication.\+c.  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{communication_8h_a3c1c5081b175278ac3fa72cbfcfc45b0}\label{communication_8h_a3c1c5081b175278ac3fa72cbfcfc45b0}} 
+\#define \mbox{\hyperlink{communication_8h_a3c1c5081b175278ac3fa72cbfcfc45b0}{C\+O\+M\+\_\+\+B\+U\+F\+\_\+\+S\+I\+ZE}}~16
+\begin{DoxyCompactList}\small\item\em buffer size, incl. \textquotesingle{}\textbackslash{}0\textquotesingle{} for string termination \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{communication_8h_ab77a878c439a1deb81297359cb29cdfe}{C\+O\+M\+\_\+\+E\+N\+D\+\_\+\+O\+F\+\_\+\+S\+T\+R\+I\+NG}}~\textquotesingle{}\textbackslash{}r\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em end of string character\+: return \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{communication_8h_a75e517498713565e7099f175f2a70500}\label{communication_8h_a75e517498713565e7099f175f2a70500}} 
+void {\bfseries C\+O\+M\+\_\+\+Init} (void)
+\item 
+\mbox{\Hypertarget{communication_8h_a32a45f0640497bf8debd2e8066378b2c}\label{communication_8h_a32a45f0640497bf8debd2e8066378b2c}} 
+void {\bfseries C\+O\+M\+\_\+\+Flush\+\_\+\+Buffers} (void)
+\item 
+\mbox{\Hypertarget{communication_8h_a432854d04e6bb697d5688acfdb367e27}\label{communication_8h_a432854d04e6bb697d5688acfdb367e27}} 
+bool {\bfseries C\+O\+M\+\_\+\+R\+X\+\_\+\+Available} (void)
+\item 
+\mbox{\Hypertarget{communication_8h_a83892c246e07863f8488c2b5eded4fca}\label{communication_8h_a83892c246e07863f8488c2b5eded4fca}} 
+void {\bfseries C\+O\+M\+\_\+\+R\+X\+\_\+\+Get\+Data} (char $\ast$string, uint32\+\_\+t n)
+\item 
+\mbox{\Hypertarget{communication_8h_a7e9a0ab8663a1e74ad64bc850e9322fb}\label{communication_8h_a7e9a0ab8663a1e74ad64bc850e9322fb}} 
+bool {\bfseries C\+O\+M\+\_\+\+T\+X\+\_\+\+Busy} (void)
+\item 
+\mbox{\Hypertarget{communication_8h_abb47bad2959d7069f50496d46673ff8d}\label{communication_8h_abb47bad2959d7069f50496d46673ff8d}} 
+void {\bfseries C\+O\+M\+\_\+\+T\+X\+\_\+\+Put\+Data} (char $\ast$string, uint32\+\_\+t n)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+See communication.\+c. 
+
+\DoxyHorRuler{0}
+ 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{communication_8h_ab77a878c439a1deb81297359cb29cdfe}\label{communication_8h_ab77a878c439a1deb81297359cb29cdfe}} 
+\index{communication.h@{communication.h}!COM\_END\_OF\_STRING@{COM\_END\_OF\_STRING}}
+\index{COM\_END\_OF\_STRING@{COM\_END\_OF\_STRING}!communication.h@{communication.h}}
+\doxysubsubsection{\texorpdfstring{COM\_END\_OF\_STRING}{COM\_END\_OF\_STRING}}
+{\footnotesize\ttfamily \#define C\+O\+M\+\_\+\+E\+N\+D\+\_\+\+O\+F\+\_\+\+S\+T\+R\+I\+NG~\textquotesingle{}\textbackslash{}r\textquotesingle{}}
+
+
+
+end of string character\+: return 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Maybe change the end of string character. It has to be the same as in the remote device. Change it also in the putty terminal on the PC. Change it also in the android app for the smartphone. \end{DoxyRefDesc}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:MDescriptors xmlns:model="http://www.silabs.com/ss/Studio.ecore">
+  <descriptors name="com.silabs.sdk.stack.super:3.0.2._640221274" label="32-bit MCU SDK" description="Silicon Labs 32-bit MCU SDK for EFM32 and EZR32">
+    <properties key="core.installationPath" value="file:/C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/.studio/efm32.properties"/>
+    <properties key="coreSdk.contributingSdk" value="com.silabs.sdk.stack.super:3.0.2._640221274"/>
+    <properties key="core.version" value="5.10.2.0_1956485230"/>
+    <properties key="sdk.subPropertyFiles" value=""/>
+    <properties key="core.partCompatibility" value="mcu.arm.efm32.* mcu.arm.ezr32.*"/>
+    <properties key="sdk.subLabel" value="MCU\ 5.10.2.0"/>
+    <properties key="sdk.templatesFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\templates.xml C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\builtinTemplates.xml"/>
+    <properties key="sdk.docsFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\mcu_doc_content.xml"/>
+    <properties key="sdk.modulesFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\modules.xml"/>
+    <properties key="gccSDK.gccLinkerScript" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\linkerScripts\linker_script_efm32_v4.ld"/>
+    <properties key="sdk.demosFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\.studio\demos.xml"/>
+    <properties key="core.detected" value="true"/>
+    <properties key="core.builtin" value="true"/>
+    <properties key="CACHED_ID_STRING" value="com.silabs.sdk.exx32"/>
+  </descriptors>
+  <descriptors name="com.silabs.sdk.stack.super:3.0.2._640221274" label="Micrium OS Kernel" description="SL-MOS-KRNX-000000-P-P1">
+    <properties key="core.installationPath" value="file:/C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/micrium_os/micrium-krnx.properties"/>
+    <properties key="coreSdk.contributingSdk" value="com.silabs.sdk.stack.super:3.0.2._640221274"/>
+    <properties key="core.version" value="5.9.2._623613171"/>
+    <properties key="sdk.subPropertyFiles" value=""/>
+    <properties key="core.partCompatibility" value="mcu.arm.efm32.g..* mcu.arm.efm32.gg.* mcu.arm.efm32.hg.* mcu.arm.efm32.pg.* mcu.arm.efm32.pg12.* mcu.arm.efm32.jg.* mcu.arm.efm32.jg12.* mcu.arm.efm32.lg.* mcu.arm.efm32.wg.* mcu.arm.efr32.*"/>
+    <properties key="sdk.subLabel" value="Micrium\ OS\ Kernel"/>
+    <properties key="installedUnit" value="krnx"/>
+    <properties key="sdk.docsFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\platform\micrium_os\micrium-krnx-docs.xml"/>
+    <properties key="core.detected" value="true"/>
+    <properties key="core.builtin" value="true"/>
+    <properties key="CACHED_ID_STRING" value="com.silabs.sdk.micrium"/>
+  </descriptors>
+  <descriptors name="com.silabs.sdk.stack.super:3.0.2._640221274" label="Platform" description="Platform">
+    <properties key="core.installationPath" value="file:/C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/app/common/app_common.properties"/>
+    <properties key="coreSdk.contributingSdk" value="com.silabs.sdk.stack.super:3.0.2._640221274"/>
+    <properties key="core.version" value="3.0.0.0_381808258"/>
+    <properties key="sdk.subPropertyFiles" value=""/>
+    <properties key="sdk.subLabel" value="Platform\ 3.0.0.0"/>
+    <properties key="sdk.templatesFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\app\common\builtin_templates.xml C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\app\common\platform_production_templates.xml"/>
+    <properties key="core.detected" value="true"/>
+    <properties key="core.builtin" value="true"/>
+    <properties key="CACHED_ID_STRING" value="com.silabs.sdk.platform"/>
+  </descriptors>
+  <descriptors name="com.silabs.sdk.stack.super:3.0.2._640221274" label="Gecko Bootloader" description="Gecko Bootloader for EFM32 and EFR32 devices">
+    <properties key="core.installationPath" value="file:/C:/SiliconLabs/SimplicityStudio/v5/developer/sdks/gecko_sdk_suite/v3.0/platform/bootloader/esf.properties"/>
+    <properties key="coreSdk.contributingSdk" value="com.silabs.sdk.stack.super:3.0.2._640221274"/>
+    <properties key="core.version" value="1.11.2._504476089"/>
+    <properties key="sdk.subPropertyFiles" value=""/>
+    <properties key="protocol.protocolKey" value="BOOTLOADER"/>
+    <properties key="stack.esf.appDirectory" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\platform\bootloader\. C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\platform\bootloader\application"/>
+    <properties key="sdk.docsFile" value="C:\SiliconLabs\SimplicityStudio\v5\developer\sdks\gecko_sdk_suite\v3.0\platform\bootloader\documentation\gecko_bootloader_documentation.xml"/>
+    <properties key="core.detected" value="true"/>
+    <properties key="core.builtin" value="true"/>
+    <properties key="CACHED_ID_STRING" value="com.silabs.sdk.stack.bootloader"/>
+  </descriptors>
+</model:MDescriptors>

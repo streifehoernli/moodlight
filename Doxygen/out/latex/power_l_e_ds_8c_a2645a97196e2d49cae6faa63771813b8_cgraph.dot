@@ -1,0 +1,14 @@
+digraph "PWR_init"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="PWR_init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Start all the power LED drivers."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="ACMP0_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#a782e09892d9ac0f93fca3715749fff10",tooltip="Initialize comparator ACMP0 and activate rising edge interrupt.   Compare input on channel 5 with sca..."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="DAC0_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#a396397a0f42d53d9f0942d118572017a",tooltip="Initialize DAC0 channel 1."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="TIMER0_PWM_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$power_l_e_ds_8c.html#abc665a8a2038b3c5f124399547b84eab",tooltip="Initialize TIMER0 in PWM mode and activate overflow interrupt."];
+}

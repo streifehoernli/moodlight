@@ -1,10 +1,8 @@
 /** ***************************************************************************
  * @mainpage Moodlight
  *
- * @todo Adapt mainpage and file descriptions to reflect own project.
- *
  * is the subject of the <b>Electonics-Project (ETP)</b>
- * starting with fall term 2016
+ * starting with fall term 2020
  * in the <b>second year of the electronics engineering curriculum</b>
  * at the School of Engineering of the Zurich University of Applied Sciences.
  * 
@@ -20,6 +18,8 @@
  * touchslider to change value and touchgecko to restart (or stop)
  * @image html gecko.png
  *
+ * For solution specific description see powerLEDs.c
+ *
  * Remote control over serial interface with a protocol based on command strings
  * @image html putty.png
  *
@@ -33,8 +33,8 @@
  * Board:  Starter Kit EFM32-G8XX-STK
  * Device: EFM32G890F128 (Gecko)
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
- * @date 15.7.2015
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
+ * @date 14.12.2020
  *****************************************************************************/
   
 
@@ -47,7 +47,7 @@
  *
  * Loops in the user interface
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
  * @date 8.7.2015
  *****************************************************************************/ 
 

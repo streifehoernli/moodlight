@@ -26,8 +26,8 @@
  *
  * Prefix: UI
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
- * @date 15.7.2015
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
+ * @date 14.12.2020
  *****************************************************************************/
 
 #include <stdlib.h>

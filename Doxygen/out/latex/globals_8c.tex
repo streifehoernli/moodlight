@@ -1,0 +1,75 @@
+\hypertarget{globals_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/globals.c File Reference}
+\label{globals_8c}\index{C:/gitrepo/moodlight/src/globals.c@{C:/gitrepo/moodlight/src/globals.c}}
+
+
+Global variables, defines and functions.  
+
+
+{\ttfamily \#include \char`\"{}em\+\_\+cmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}globals.\+h\char`\"{}}\newline
+Include dependency graph for globals.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{globals_8c_a6722aa896fe7c90c4e283f433ea7985d}{I\+N\+I\+T\+\_\+\+X\+Oclocks}} ()
+\begin{DoxyCompactList}\small\item\em Start crystal oscillators and use these clock sources. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{globals_8c_aa2888854405a2129b2c533449daef69a}{ltostr}} (int32\+\_\+t l, char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Convert an integer to a string (in base 10 representation) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Global variables, defines and functions. 
+
+\DoxyHorRuler{0}
+
+
+Prefix\+: G
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+6.\+5.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{globals_8c_a6722aa896fe7c90c4e283f433ea7985d}\label{globals_8c_a6722aa896fe7c90c4e283f433ea7985d}} 
+\index{globals.c@{globals.c}!INIT\_XOclocks@{INIT\_XOclocks}}
+\index{INIT\_XOclocks@{INIT\_XOclocks}!globals.c@{globals.c}}
+\doxysubsubsection{\texorpdfstring{INIT\_XOclocks()}{INIT\_XOclocks()}}
+{\footnotesize\ttfamily void I\+N\+I\+T\+\_\+\+X\+Oclocks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Start crystal oscillators and use these clock sources. 
+
+\DoxyHorRuler{0}
+
+
+High frequency clock = 32M\+Hhz (defined by crystal on the starter kit) Low frequency clock = 32.\+768k\+Hz (defined by crystal on the starter kit) Here is the caller graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{globals_8c_aa2888854405a2129b2c533449daef69a}\label{globals_8c_aa2888854405a2129b2c533449daef69a}} 
+\index{globals.c@{globals.c}!ltostr@{ltostr}}
+\index{ltostr@{ltostr}!globals.c@{globals.c}}
+\doxysubsubsection{\texorpdfstring{ltostr()}{ltostr()}}
+{\footnotesize\ttfamily void ltostr (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{l,  }\item[{char $\ast$}]{string }\end{DoxyParamCaption})}
+
+
+
+Convert an integer to a string (in base 10 representation) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em l} & = integer to convert \\
+\hline
+\mbox{\texttt{ out}}  & {\em string} & = string representation of number l\\
+\hline
+\end{DoxyParams}
+ltostr (long to string) is the inverse function to strtol (string to long) ~\newline
+ strtol is a standard function in stdlib.\+h ~\newline
+ ltostr unfortunately is not. So it is provided here for convenience. ~\newline
+ Make sure the string is at least \mbox{[}12\mbox{]} long to hold the maximum integer. \begin{DoxyNote}{Note}
+strtol and ltostr need less memory than sscanf and sprintf 
+\end{DoxyNote}

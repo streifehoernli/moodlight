@@ -1,0 +1,274 @@
+\hypertarget{userinterface_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/userinterface.c File Reference}
+\label{userinterface_8c}\index{C:/gitrepo/moodlight/src/userinterface.c@{C:/gitrepo/moodlight/src/userinterface.c}}
+
+
+User interface.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+emu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}segmentlcd.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}globals.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}userinterface.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pushbuttons.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}touchslider.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}communication.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}power\+L\+E\+Ds.\+h\char`\"{}}\newline
+Include dependency graph for userinterface.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{userinterface_8c_a217d6d63166032f1370ddc68471be9b7}{U\+I\+\_\+\+S\+T\+A\+T\+E\+\_\+\+C\+O\+U\+NT}}~7
+\begin{DoxyCompactList}\small\item\em number of F\+SM states \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{userinterface_8c_a3b5d5c55f6a1a5f034ddba502d98ef12}{U\+I\+\_\+\+T\+E\+X\+T\+\_\+\+C\+O\+M\+P\+A\+R\+E\+\_\+\+L\+E\+N\+G\+TH}}~3
+\begin{DoxyCompactList}\small\item\em compare first x chars of string \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{userinterface_8c_a3ed53c1d9f6401e0a313841c26e585ed}\label{userinterface_8c_a3ed53c1d9f6401e0a313841c26e585ed}} 
+\#define \mbox{\hyperlink{userinterface_8c_a3ed53c1d9f6401e0a313841c26e585ed}{U\+I\+\_\+\+D\+E\+L\+AY}}~10000
+\begin{DoxyCompactList}\small\item\em user interface delay (in T\+I\+M\+E\+R0 ticks) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00e}{U\+I\+\_\+state\+\_\+t}} \{ \newline
+\mbox{\hyperlink{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00ea283fc479650da98250635b9c3c0e7e50}{W\+H\+I\+TE}} = 0, 
+{\bfseries A\+M\+B\+ER}, 
+{\bfseries R\+ED}, 
+{\bfseries G\+R\+E\+EN}, 
+\newline
+{\bfseries B\+L\+UE}, 
+{\bfseries I\+D\+LE}, 
+{\bfseries S\+T\+A\+RT}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{userinterface_8c_a15f87a06f768b9692b824c10a9c709df}{U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Touch}} (void)
+\begin{DoxyCompactList}\small\item\em Part of the user interface finite state machine\+: Touch events. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{userinterface_8c_a6aa0164fdca845cfa640d17e630f6d65}{U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Pushbutton}} (void)
+\begin{DoxyCompactList}\small\item\em Part of the user interface finite state machine\+: Pushbutton events. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{userinterface_8c_a8fb86f2839178b01686517fecdfdf3b6}{U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Remote\+Control}} (void)
+\begin{DoxyCompactList}\small\item\em Part of the user interface finite state machine\+: Remote control events. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{userinterface_8c_a50df69c8866e000377a8bc7dbe685a58}{U\+I\+\_\+\+F\+S\+M\+\_\+event}} (void)
+\begin{DoxyCompactList}\small\item\em User interface finite state machine\+: Checks for events. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{userinterface_8c_a0b01a6916c8c2e227ffd51e34a7cc87b}{U\+I\+\_\+\+F\+S\+M\+\_\+state\+\_\+value}} (void)
+\begin{DoxyCompactList}\small\item\em User interface finite state machine\+: Handled the events. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{userinterface_8c_a9d9e7740b3f83ae8837fc1127fe34c19}{U\+I\+\_\+text}} \mbox{[}\mbox{\hyperlink{userinterface_8c_a217d6d63166032f1370ddc68471be9b7}{U\+I\+\_\+\+S\+T\+A\+T\+E\+\_\+\+C\+O\+U\+NT}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em text for display and remote control \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{userinterface_8c_a22f7a3566a3e094b071ffc78fdadee6f}\label{userinterface_8c_a22f7a3566a3e094b071ffc78fdadee6f}} 
+\mbox{\hyperlink{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00e}{U\+I\+\_\+state\+\_\+t}} \mbox{\hyperlink{userinterface_8c_a22f7a3566a3e094b071ffc78fdadee6f}{U\+I\+\_\+state\+\_\+next}} = S\+T\+A\+RT
+\begin{DoxyCompactList}\small\item\em next state of the F\+SM \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{userinterface_8c_ab1176a0278bf0edd4eae364bf6962d0c}\label{userinterface_8c_ab1176a0278bf0edd4eae364bf6962d0c}} 
+bool \mbox{\hyperlink{userinterface_8c_ab1176a0278bf0edd4eae364bf6962d0c}{U\+I\+\_\+state\+\_\+changed}} = true
+\begin{DoxyCompactList}\small\item\em state transition of the F\+SM \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{userinterface_8c_a013ac08e9dced26a43413e8cff21628c}\label{userinterface_8c_a013ac08e9dced26a43413e8cff21628c}} 
+int32\+\_\+t \mbox{\hyperlink{userinterface_8c_a013ac08e9dced26a43413e8cff21628c}{U\+I\+\_\+value\+\_\+next}} = 0
+\begin{DoxyCompactList}\small\item\em next value (if applicable) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{userinterface_8c_aed6241004af71a1ee341f3f17d62ad53}\label{userinterface_8c_aed6241004af71a1ee341f3f17d62ad53}} 
+bool \mbox{\hyperlink{userinterface_8c_aed6241004af71a1ee341f3f17d62ad53}{U\+I\+\_\+value\+\_\+changed}} = true
+\begin{DoxyCompactList}\small\item\em value changed \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+User interface. 
+
+\DoxyHorRuler{0}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000016}{Todo}}]Write the description of the effectively implemented user interface.\end{DoxyRefDesc}
+
+
+The user interface is implemented as a Finite State Machine.
+
+The {\bfseries{states}} are\+: ~\newline
+ W\+H\+I\+TE, A\+M\+B\+ER, R\+ED, G\+R\+E\+EN, B\+L\+UE, I\+D\+LE, S\+T\+OP, S\+T\+A\+RT
+
+The {\bfseries{events}} and {\bfseries{transitions}} are\+:
+\begin{DoxyDescription}
+\item[Touchgecko pressed ]Go to state S\+T\+A\+RT, initialize the system and switch to state I\+D\+LE. 
+\item[Touchslider touched ]Adjust value of the currently active state. 
+\item[Pushbutton 0 pressed ]Go one state to the right, wrap around from I\+D\+LE to W\+H\+I\+TE. 
+\item[Pushbutton 1 pressed ]Go one state to the left, wrap around from W\+H\+I\+TE to I\+D\+LE. 
+\item[Remote command from serial interface received ]The received string is parsed and the new state and value set accordingly. 
+\end{DoxyDescription}Any changes in state or value are reflected on the {\bfseries{display}} and also sent over the serial interface to the {\bfseries{remote control}}.
+
+Prefix\+: UI
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15.\+7.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{userinterface_8c_a217d6d63166032f1370ddc68471be9b7}\label{userinterface_8c_a217d6d63166032f1370ddc68471be9b7}} 
+\index{userinterface.c@{userinterface.c}!UI\_STATE\_COUNT@{UI\_STATE\_COUNT}}
+\index{UI\_STATE\_COUNT@{UI\_STATE\_COUNT}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_STATE\_COUNT}{UI\_STATE\_COUNT}}
+{\footnotesize\ttfamily \#define U\+I\+\_\+\+S\+T\+A\+T\+E\+\_\+\+C\+O\+U\+NT~7}
+
+
+
+number of F\+SM states 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000017}{Todo}}]Adjust number of user interface states. \end{DoxyRefDesc}
+\mbox{\Hypertarget{userinterface_8c_a3b5d5c55f6a1a5f034ddba502d98ef12}\label{userinterface_8c_a3b5d5c55f6a1a5f034ddba502d98ef12}} 
+\index{userinterface.c@{userinterface.c}!UI\_TEXT\_COMPARE\_LENGTH@{UI\_TEXT\_COMPARE\_LENGTH}}
+\index{UI\_TEXT\_COMPARE\_LENGTH@{UI\_TEXT\_COMPARE\_LENGTH}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_TEXT\_COMPARE\_LENGTH}{UI\_TEXT\_COMPARE\_LENGTH}}
+{\footnotesize\ttfamily \#define U\+I\+\_\+\+T\+E\+X\+T\+\_\+\+C\+O\+M\+P\+A\+R\+E\+\_\+\+L\+E\+N\+G\+TH~3}
+
+
+
+compare first x chars of string 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000019}{Todo}}]Adjusting required? \end{DoxyRefDesc}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00e}\label{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00e}} 
+\index{userinterface.c@{userinterface.c}!UI\_state\_t@{UI\_state\_t}}
+\index{UI\_state\_t@{UI\_state\_t}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_state\_t}{UI\_state\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00e}{U\+I\+\_\+state\+\_\+t}}}
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000020}{Todo}}]Adjust enum names of user interface states. \end{DoxyRefDesc}
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WHITE@{WHITE}!userinterface.c@{userinterface.c}}\index{userinterface.c@{userinterface.c}!WHITE@{WHITE}}}\mbox{\Hypertarget{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00ea283fc479650da98250635b9c3c0e7e50}\label{userinterface_8c_aa9025a1123214371cc7f6a5bd90da00ea283fc479650da98250635b9c3c0e7e50}} 
+W\+H\+I\+TE&enum with the F\+SM states \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{userinterface_8c_a50df69c8866e000377a8bc7dbe685a58}\label{userinterface_8c_a50df69c8866e000377a8bc7dbe685a58}} 
+\index{userinterface.c@{userinterface.c}!UI\_FSM\_event@{UI\_FSM\_event}}
+\index{UI\_FSM\_event@{UI\_FSM\_event}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_FSM\_event()}{UI\_FSM\_event()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+F\+S\+M\+\_\+event (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+User interface finite state machine\+: Checks for events. 
+
+\DoxyHorRuler{0}
+
+
+Check if an event has occurred and define next state and value. Here is the call graph for this function\+:
+% FIG 1
+Here is the caller graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{userinterface_8c_a6aa0164fdca845cfa640d17e630f6d65}\label{userinterface_8c_a6aa0164fdca845cfa640d17e630f6d65}} 
+\index{userinterface.c@{userinterface.c}!UI\_FSM\_event\_Pushbutton@{UI\_FSM\_event\_Pushbutton}}
+\index{UI\_FSM\_event\_Pushbutton@{UI\_FSM\_event\_Pushbutton}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_FSM\_event\_Pushbutton()}{UI\_FSM\_event\_Pushbutton()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Pushbutton (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Part of the user interface finite state machine\+: Pushbutton events. 
+
+\DoxyHorRuler{0}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000022}{Todo}}]Probably this code has to be reviewed and adapted.\end{DoxyRefDesc}
+Here is the caller graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{userinterface_8c_a8fb86f2839178b01686517fecdfdf3b6}\label{userinterface_8c_a8fb86f2839178b01686517fecdfdf3b6}} 
+\index{userinterface.c@{userinterface.c}!UI\_FSM\_event\_RemoteControl@{UI\_FSM\_event\_RemoteControl}}
+\index{UI\_FSM\_event\_RemoteControl@{UI\_FSM\_event\_RemoteControl}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_FSM\_event\_RemoteControl()}{UI\_FSM\_event\_RemoteControl()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Remote\+Control (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Part of the user interface finite state machine\+: Remote control events. 
+
+\DoxyHorRuler{0}
+
+
+If a string is available from the serial interface read and analyze it. ~\newline
+ The core is a parser which analyzes the received command string. ~\newline
+ It extracts the state and the value (if any). The value is separated by a \textquotesingle{} \textquotesingle{} from the state. ~\newline
+ There are 3 possible outcomes\+: ~\newline
+ -\/ No valid state is recognized =$>$ nothing happens ~\newline
+ -\/ A valid state is recognized, but no valid value =$>$ switch to that state, don\textquotesingle{}t change the value ~\newline
+ -\/ Valid state and value received =$>$ switch to that state and change the value Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5
+\mbox{\Hypertarget{userinterface_8c_a15f87a06f768b9692b824c10a9c709df}\label{userinterface_8c_a15f87a06f768b9692b824c10a9c709df}} 
+\index{userinterface.c@{userinterface.c}!UI\_FSM\_event\_Touch@{UI\_FSM\_event\_Touch}}
+\index{UI\_FSM\_event\_Touch@{UI\_FSM\_event\_Touch}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_FSM\_event\_Touch()}{UI\_FSM\_event\_Touch()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+F\+S\+M\+\_\+event\+\_\+\+Touch (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Part of the user interface finite state machine\+: Touch events. 
+
+\DoxyHorRuler{0}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000021}{Todo}}]Probably this code has to be reviewed and adapted.\end{DoxyRefDesc}
+Here is the call graph for this function\+:
+% FIG 6
+Here is the caller graph for this function\+:
+% FIG 7
+\mbox{\Hypertarget{userinterface_8c_a0b01a6916c8c2e227ffd51e34a7cc87b}\label{userinterface_8c_a0b01a6916c8c2e227ffd51e34a7cc87b}} 
+\index{userinterface.c@{userinterface.c}!UI\_FSM\_state\_value@{UI\_FSM\_state\_value}}
+\index{UI\_FSM\_state\_value@{UI\_FSM\_state\_value}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_FSM\_state\_value()}{UI\_FSM\_state\_value()}}
+{\footnotesize\ttfamily void U\+I\+\_\+\+F\+S\+M\+\_\+state\+\_\+value (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+User interface finite state machine\+: Handled the events. 
+
+\DoxyHorRuler{0}
+
+
+~\newline
+ Switch to the next state and/or adjust the value.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000023}{Todo}}]Probably this code has to be reviewed and adapted.\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000024}{Todo}}]Adjust U\+I\+\_\+\+D\+E\+L\+AY to get a sensible responsiveness. If a timer interrupt is activated, uncomment the following line. \end{DoxyRefDesc}
+Here is the caller graph for this function\+:
+% FIG 8
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{userinterface_8c_a9d9e7740b3f83ae8837fc1127fe34c19}\label{userinterface_8c_a9d9e7740b3f83ae8837fc1127fe34c19}} 
+\index{userinterface.c@{userinterface.c}!UI\_text@{UI\_text}}
+\index{UI\_text@{UI\_text}!userinterface.c@{userinterface.c}}
+\doxysubsubsection{\texorpdfstring{UI\_text}{UI\_text}}
+{\footnotesize\ttfamily char$\ast$ U\+I\+\_\+text\mbox{[}\mbox{\hyperlink{userinterface_8c_a217d6d63166032f1370ddc68471be9b7}{U\+I\+\_\+\+S\+T\+A\+T\+E\+\_\+\+C\+O\+U\+NT}}\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}white"{}}, \textcolor{stringliteral}{"{}amber"{}}, \textcolor{stringliteral}{"{}red"{}}, \textcolor{stringliteral}{"{}green"{}}, \textcolor{stringliteral}{"{}blue"{}}, \textcolor{stringliteral}{"{}idle"{}}, \textcolor{stringliteral}{"{}start"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+text for display and remote control 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000018}{Todo}}]Adjust display and remote control text of user interface states. \end{DoxyRefDesc}

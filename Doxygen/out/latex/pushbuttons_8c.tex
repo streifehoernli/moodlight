@@ -1,0 +1,119 @@
+\hypertarget{pushbuttons_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/pushbuttons.c File Reference}
+\label{pushbuttons_8c}\index{C:/gitrepo/moodlight/src/pushbuttons.c@{C:/gitrepo/moodlight/src/pushbuttons.c}}
+
+
+Pushbuttons.  
+
+
+{\ttfamily \#include \char`\"{}em\+\_\+cmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+gpio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pushbuttons.\+h\char`\"{}}\newline
+Include dependency graph for pushbuttons.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pushbuttons_8c_ad891cd64538eea14b7d0a5af31dc9d54}\label{pushbuttons_8c_ad891cd64538eea14b7d0a5af31dc9d54}} 
+\#define \mbox{\hyperlink{pushbuttons_8c_ad891cd64538eea14b7d0a5af31dc9d54}{P\+B0\+\_\+\+P\+O\+RT}}~gpio\+PortB
+\begin{DoxyCompactList}\small\item\em Port of push button 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pushbuttons_8c_aea39132b18ce668ed815d13c3153323b}\label{pushbuttons_8c_aea39132b18ce668ed815d13c3153323b}} 
+\#define \mbox{\hyperlink{pushbuttons_8c_aea39132b18ce668ed815d13c3153323b}{P\+B0\+\_\+\+P\+IN}}~9
+\begin{DoxyCompactList}\small\item\em Pin of push button 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pushbuttons_8c_a45dba1bc29795a6d20a5eab51e7932be}\label{pushbuttons_8c_a45dba1bc29795a6d20a5eab51e7932be}} 
+\#define \mbox{\hyperlink{pushbuttons_8c_a45dba1bc29795a6d20a5eab51e7932be}{P\+B1\+\_\+\+P\+O\+RT}}~gpio\+PortB
+\begin{DoxyCompactList}\small\item\em Port of push button 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pushbuttons_8c_aa33c970f051ff2f38a217f39f00599c1}\label{pushbuttons_8c_aa33c970f051ff2f38a217f39f00599c1}} 
+\#define \mbox{\hyperlink{pushbuttons_8c_aa33c970f051ff2f38a217f39f00599c1}{P\+B1\+\_\+\+P\+IN}}~10
+\begin{DoxyCompactList}\small\item\em Pin of push button 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{pushbuttons_8c_a4dfda756d68c9bfd03813dbb95459c60}{P\+B\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Setup G\+P\+IO for the pushbuttons. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pushbuttons_8c_a8fff5a798ff4721659dc7bdbb3149c8b}{G\+P\+I\+O\+\_\+\+O\+D\+D\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em G\+P\+IO interrupt handler for pushbutton 0. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pushbuttons_8c_a87d72653156b83829786f1f856ecbad1}{G\+P\+I\+O\+\_\+\+E\+V\+E\+N\+\_\+\+I\+R\+Q\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em G\+P\+IO interrupt handler for pushbutton 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pushbuttons_8c_af1b029270cc8cbd041ce1987d300de06}\label{pushbuttons_8c_af1b029270cc8cbd041ce1987d300de06}} 
+volatile bool \mbox{\hyperlink{pushbuttons_8c_af1b029270cc8cbd041ce1987d300de06}{P\+B0\+\_\+\+I\+R\+Qflag}} = false
+\begin{DoxyCompactList}\small\item\em set with pushbutton 0 interrupt \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pushbuttons_8c_a84c3faed1ebe7e1676d32a9838b37ef9}\label{pushbuttons_8c_a84c3faed1ebe7e1676d32a9838b37ef9}} 
+volatile bool \mbox{\hyperlink{pushbuttons_8c_a84c3faed1ebe7e1676d32a9838b37ef9}{P\+B1\+\_\+\+I\+R\+Qflag}} = false
+\begin{DoxyCompactList}\small\item\em set with pushbutton 1 interrupt \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Pushbuttons. 
+
+\DoxyHorRuler{0}
+
+
+All the functions needed to handle the pushbuttons
+
+\begin{DoxyNote}{Note}
+The pushbutton status can be polled by reading the input. If interrupts are enabled it is also possible to use this as an event.
+\end{DoxyNote}
+Prefix\+: PB
+
+Board\+: Starter Kit E\+F\+M32-\/\+G8\+X\+X-\/\+S\+TK Device\+: E\+F\+M32\+G890\+F128 (Gecko)
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+7.\+5.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{pushbuttons_8c_a87d72653156b83829786f1f856ecbad1}\label{pushbuttons_8c_a87d72653156b83829786f1f856ecbad1}} 
+\index{pushbuttons.c@{pushbuttons.c}!GPIO\_EVEN\_IRQHandler@{GPIO\_EVEN\_IRQHandler}}
+\index{GPIO\_EVEN\_IRQHandler@{GPIO\_EVEN\_IRQHandler}!pushbuttons.c@{pushbuttons.c}}
+\doxysubsubsection{\texorpdfstring{GPIO\_EVEN\_IRQHandler()}{GPIO\_EVEN\_IRQHandler()}}
+{\footnotesize\ttfamily void G\+P\+I\+O\+\_\+\+E\+V\+E\+N\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+G\+P\+IO interrupt handler for pushbutton 1. 
+
+\DoxyHorRuler{0}
+
+
+The HW interrupt flag is cleared immediately to be able to return from interrupt handling. \begin{DoxyNote}{Note}
+The P\+B1\+\_\+\+I\+R\+Qflag is set and can be handled asynchronously. It has to be cleared explicitly after handling. 
+\end{DoxyNote}
+\mbox{\Hypertarget{pushbuttons_8c_a8fff5a798ff4721659dc7bdbb3149c8b}\label{pushbuttons_8c_a8fff5a798ff4721659dc7bdbb3149c8b}} 
+\index{pushbuttons.c@{pushbuttons.c}!GPIO\_ODD\_IRQHandler@{GPIO\_ODD\_IRQHandler}}
+\index{GPIO\_ODD\_IRQHandler@{GPIO\_ODD\_IRQHandler}!pushbuttons.c@{pushbuttons.c}}
+\doxysubsubsection{\texorpdfstring{GPIO\_ODD\_IRQHandler()}{GPIO\_ODD\_IRQHandler()}}
+{\footnotesize\ttfamily void G\+P\+I\+O\+\_\+\+O\+D\+D\+\_\+\+I\+R\+Q\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+G\+P\+IO interrupt handler for pushbutton 0. 
+
+\DoxyHorRuler{0}
+
+
+The HW interrupt flag is cleared immediately to be able to return from interrupt handling. \begin{DoxyNote}{Note}
+The P\+B0\+\_\+\+I\+R\+Qflag is set and can be handled asynchronously. It has to be cleared explicitly after handling. 
+\end{DoxyNote}
+\mbox{\Hypertarget{pushbuttons_8c_a4dfda756d68c9bfd03813dbb95459c60}\label{pushbuttons_8c_a4dfda756d68c9bfd03813dbb95459c60}} 
+\index{pushbuttons.c@{pushbuttons.c}!PB\_Init@{PB\_Init}}
+\index{PB\_Init@{PB\_Init}!pushbuttons.c@{pushbuttons.c}}
+\doxysubsubsection{\texorpdfstring{PB\_Init()}{PB\_Init()}}
+{\footnotesize\ttfamily void P\+B\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup G\+P\+IO for the pushbuttons. 
+
+\DoxyHorRuler{0}
+ \begin{DoxyNote}{Note}
+Interrupts are configured but not enabled
+\end{DoxyNote}
+Pending interrupt flags are cleared Here is the caller graph for this function\+:
+% FIG 1

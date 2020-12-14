@@ -16,8 +16,8 @@
  * Board:  Starter Kit EFM32-G8XX-STK
  * Device: EFM32G890F128 (Gecko)
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
- * @date 15.7.2015
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
+ * @date 14.12.2020
  *****************************************************************************/
 
 #include <string.h>

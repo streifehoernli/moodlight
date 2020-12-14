@@ -1,0 +1,156 @@
+\hypertarget{signal_l_e_ds_8h}{}\doxysection{C\+:/gitrepo/moodlight/src/inc/signal\+L\+E\+Ds.h File Reference}
+\label{signal_l_e_ds_8h}\index{C:/gitrepo/moodlight/src/inc/signalLEDs.h@{C:/gitrepo/moodlight/src/inc/signalLEDs.h}}
+
+
+See signal\+L\+E\+Ds.\+c.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+gpio.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_ae303982a73304e86e43848faa890dec9}\label{signal_l_e_ds_8h_ae303982a73304e86e43848faa890dec9}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_ae303982a73304e86e43848faa890dec9}{S\+L\+\_\+0\+\_\+\+P\+O\+RT}}~gpio\+PortC
+\begin{DoxyCompactList}\small\item\em Port of signal L\+ED 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a9e7e74e423a1d5a4b510889dbfeb1fad}\label{signal_l_e_ds_8h_a9e7e74e423a1d5a4b510889dbfeb1fad}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a9e7e74e423a1d5a4b510889dbfeb1fad}{S\+L\+\_\+0\+\_\+\+P\+IN}}~0
+\begin{DoxyCompactList}\small\item\em Pin of signal L\+ED 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_aa50a30ba115da4568fe26f48dca27b71}\label{signal_l_e_ds_8h_aa50a30ba115da4568fe26f48dca27b71}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_aa50a30ba115da4568fe26f48dca27b71}{S\+L\+\_\+1\+\_\+\+P\+O\+RT}}~gpio\+PortC
+\begin{DoxyCompactList}\small\item\em Port of signal L\+ED 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a2c7b21b585b450a4a423fba5fee3fac7}\label{signal_l_e_ds_8h_a2c7b21b585b450a4a423fba5fee3fac7}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a2c7b21b585b450a4a423fba5fee3fac7}{S\+L\+\_\+1\+\_\+\+P\+IN}}~1
+\begin{DoxyCompactList}\small\item\em Pin of signal L\+ED 1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a37e4b4e8372abe88c6f3064bd224b9f0}\label{signal_l_e_ds_8h_a37e4b4e8372abe88c6f3064bd224b9f0}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a37e4b4e8372abe88c6f3064bd224b9f0}{S\+L\+\_\+2\+\_\+\+P\+O\+RT}}~gpio\+PortC
+\begin{DoxyCompactList}\small\item\em Port of signal L\+ED 2. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a5accee7401fd3542979d46f3679bdffb}\label{signal_l_e_ds_8h_a5accee7401fd3542979d46f3679bdffb}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a5accee7401fd3542979d46f3679bdffb}{S\+L\+\_\+2\+\_\+\+P\+IN}}~2
+\begin{DoxyCompactList}\small\item\em Pin of signal L\+ED 2. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a1e99bc0141e4fe3fded7d357fa10ade1}\label{signal_l_e_ds_8h_a1e99bc0141e4fe3fded7d357fa10ade1}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a1e99bc0141e4fe3fded7d357fa10ade1}{S\+L\+\_\+3\+\_\+\+P\+O\+RT}}~gpio\+PortC
+\begin{DoxyCompactList}\small\item\em Port of signal L\+ED 3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a21f66998ec85a740c5c3c7ddd63aedb4}\label{signal_l_e_ds_8h_a21f66998ec85a740c5c3c7ddd63aedb4}} 
+\#define \mbox{\hyperlink{signal_l_e_ds_8h_a21f66998ec85a740c5c3c7ddd63aedb4}{S\+L\+\_\+3\+\_\+\+P\+IN}}~3
+\begin{DoxyCompactList}\small\item\em Pin of signal L\+ED 3. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{signal_l_e_ds_8h_a14455a91dae7fbf143480ab20f435df7}\label{signal_l_e_ds_8h_a14455a91dae7fbf143480ab20f435df7}} 
+void {\bfseries S\+L\+\_\+\+Init} (void)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{signal_l_e_ds_8h_a68077785fe1415591fbe13dce2efb187}{S\+L\+\_\+\+On}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin)
+\begin{DoxyCompactList}\small\item\em Turn on the selected signal L\+ED. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{signal_l_e_ds_8h_aa418b08a1f3c7f372f92f5c624ca0262}{S\+L\+\_\+\+Off}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin)
+\begin{DoxyCompactList}\small\item\em Turn off the selected signal L\+ED. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{signal_l_e_ds_8h_a0b3b07d654ff3ba6a435609ceb4f889e}{S\+L\+\_\+\+Toggle}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin)
+\begin{DoxyCompactList}\small\item\em Toggle the selected signal L\+ED. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{signal_l_e_ds_8h_a1dfa797642b17b7c1bb75f13e16845ef}{S\+L\+\_\+\+Set}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin, bool status)
+\begin{DoxyCompactList}\small\item\em Read the status of the selected signal L\+ED. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE bool \mbox{\hyperlink{signal_l_e_ds_8h_a66a6c2fa18dd7367303ab72ebd5ab98b}{S\+L\+\_\+\+Get}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin)
+\begin{DoxyCompactList}\small\item\em Read the status of the selected signal L\+ED. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+See signal\+L\+E\+Ds.\+c. 
+
+\DoxyHorRuler{0}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{signal_l_e_ds_8h_a66a6c2fa18dd7367303ab72ebd5ab98b}\label{signal_l_e_ds_8h_a66a6c2fa18dd7367303ab72ebd5ab98b}} 
+\index{signalLEDs.h@{signalLEDs.h}!SL\_Get@{SL\_Get}}
+\index{SL\_Get@{SL\_Get}!signalLEDs.h@{signalLEDs.h}}
+\doxysubsubsection{\texorpdfstring{SL\_Get()}{SL\_Get()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE bool S\+L\+\_\+\+Get (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Read the status of the selected signal L\+ED. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of signal L\+ED \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true = signal L\+ED is on, false = signal L\+ED is off 
+\end{DoxyReturn}
+\mbox{\Hypertarget{signal_l_e_ds_8h_aa418b08a1f3c7f372f92f5c624ca0262}\label{signal_l_e_ds_8h_aa418b08a1f3c7f372f92f5c624ca0262}} 
+\index{signalLEDs.h@{signalLEDs.h}!SL\_Off@{SL\_Off}}
+\index{SL\_Off@{SL\_Off}!signalLEDs.h@{signalLEDs.h}}
+\doxysubsubsection{\texorpdfstring{SL\_Off()}{SL\_Off()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void S\+L\+\_\+\+Off (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Turn off the selected signal L\+ED. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of signal L\+ED \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{signal_l_e_ds_8h_a68077785fe1415591fbe13dce2efb187}\label{signal_l_e_ds_8h_a68077785fe1415591fbe13dce2efb187}} 
+\index{signalLEDs.h@{signalLEDs.h}!SL\_On@{SL\_On}}
+\index{SL\_On@{SL\_On}!signalLEDs.h@{signalLEDs.h}}
+\doxysubsubsection{\texorpdfstring{SL\_On()}{SL\_On()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void S\+L\+\_\+\+On (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Turn on the selected signal L\+ED. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of signal L\+ED \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{signal_l_e_ds_8h_a1dfa797642b17b7c1bb75f13e16845ef}\label{signal_l_e_ds_8h_a1dfa797642b17b7c1bb75f13e16845ef}} 
+\index{signalLEDs.h@{signalLEDs.h}!SL\_Set@{SL\_Set}}
+\index{SL\_Set@{SL\_Set}!signalLEDs.h@{signalLEDs.h}}
+\doxysubsubsection{\texorpdfstring{SL\_Set()}{SL\_Set()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void S\+L\+\_\+\+Set (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin,  }\item[{bool}]{status }\end{DoxyParamCaption})}
+
+
+
+Read the status of the selected signal L\+ED. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em status} & true = turn signal L\+ED on, false = turn signal L\+ED off \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{signal_l_e_ds_8h_a0b3b07d654ff3ba6a435609ceb4f889e}\label{signal_l_e_ds_8h_a0b3b07d654ff3ba6a435609ceb4f889e}} 
+\index{signalLEDs.h@{signalLEDs.h}!SL\_Toggle@{SL\_Toggle}}
+\index{SL\_Toggle@{SL\_Toggle}!signalLEDs.h@{signalLEDs.h}}
+\doxysubsubsection{\texorpdfstring{SL\_Toggle()}{SL\_Toggle()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void S\+L\+\_\+\+Toggle (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Toggle the selected signal L\+ED. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of signal L\+ED \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of signal L\+ED \\
+\hline
+\end{DoxyParams}

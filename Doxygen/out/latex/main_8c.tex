@@ -1,0 +1,63 @@
+\hypertarget{main_8c}{}\doxysection{C\+:/gitrepo/moodlight/src/main.c File Reference}
+\label{main_8c}\index{C:/gitrepo/moodlight/src/main.c@{C:/gitrepo/moodlight/src/main.c}}
+
+
+main file for the Moodlight  
+
+
+{\ttfamily \#include \char`\"{}em\+\_\+chip.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+device.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+system.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+cmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}em\+\_\+emu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}segmentlcd.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}globals.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}communication.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pushbuttons.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}power\+L\+E\+Ds.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}touchslider.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}userinterface.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}signalleds.\+h\char`\"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em main function \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+main file for the Moodlight 
+
+\DoxyHorRuler{0}
+
+
+Sets up uC, clocks, peripherals and user interface. Starts the power\+L\+E\+Ds, etc.
+
+Loops in the user interface
+
+\begin{DoxyAuthor}{Author}
+Hanspeter Hochreutener (\href{mailto:hhrt@zhaw.ch}{\texttt{ hhrt@zhaw.\+ch}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+8.\+7.\+2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+main function 
+
+\begin{DoxyReturn}{Returns}
+nothing, as it runs in an endless loop Sets up uC, clocks, peripherals and user interface. Waits in low energy mode for an interrupt. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+% FIG 1

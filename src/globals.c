@@ -4,7 +4,7 @@
  *
  * Prefix: G
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
  * @date 6.5.2015
  *****************************************************************************/ 
 

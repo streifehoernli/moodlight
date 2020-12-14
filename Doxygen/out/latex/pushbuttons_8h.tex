@@ -1,0 +1,88 @@
+\hypertarget{pushbuttons_8h}{}\doxysection{C\+:/gitrepo/moodlight/src/inc/pushbuttons.h File Reference}
+\label{pushbuttons_8h}\index{C:/gitrepo/moodlight/src/inc/pushbuttons.h@{C:/gitrepo/moodlight/src/inc/pushbuttons.h}}
+
+
+See pushbuttons.\+c.  
+
+
+{\ttfamily \#include \char`\"{}em\+\_\+gpio.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pushbuttons_8h_a4dfda756d68c9bfd03813dbb95459c60}\label{pushbuttons_8h_a4dfda756d68c9bfd03813dbb95459c60}} 
+void {\bfseries P\+B\+\_\+\+Init} (void)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{pushbuttons_8h_a251d22910eea6b84f863fb71255c1876}{P\+B\+\_\+\+Enable\+I\+RQ}} (void)
+\begin{DoxyCompactList}\small\item\em Enable G\+P\+IO for pushbutton interrupt. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void \mbox{\hyperlink{pushbuttons_8h_a1524196222e276fa1a922afa5d4bd470}{P\+B\+\_\+\+Disable\+I\+RQ}} (void)
+\begin{DoxyCompactList}\small\item\em Disable G\+P\+IO for pushbutton interrupt. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE bool \mbox{\hyperlink{pushbuttons_8h_a4417c1639199f1b247a9419bdcace115}{P\+B\+\_\+\+Status}} (G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def port, unsigned int pin)
+\begin{DoxyCompactList}\small\item\em Check the current status of the selected pushbutton. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pushbuttons_8h_af1b029270cc8cbd041ce1987d300de06}\label{pushbuttons_8h_af1b029270cc8cbd041ce1987d300de06}} 
+volatile bool \mbox{\hyperlink{pushbuttons_8h_af1b029270cc8cbd041ce1987d300de06}{P\+B0\+\_\+\+I\+R\+Qflag}}
+\begin{DoxyCompactList}\small\item\em set with pushbutton 0 interrupt \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pushbuttons_8h_a84c3faed1ebe7e1676d32a9838b37ef9}\label{pushbuttons_8h_a84c3faed1ebe7e1676d32a9838b37ef9}} 
+volatile bool \mbox{\hyperlink{pushbuttons_8h_a84c3faed1ebe7e1676d32a9838b37ef9}{P\+B1\+\_\+\+I\+R\+Qflag}}
+\begin{DoxyCompactList}\small\item\em set with pushbutton 1 interrupt \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+See pushbuttons.\+c. 
+
+\DoxyHorRuler{0}
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{pushbuttons_8h_a1524196222e276fa1a922afa5d4bd470}\label{pushbuttons_8h_a1524196222e276fa1a922afa5d4bd470}} 
+\index{pushbuttons.h@{pushbuttons.h}!PB\_DisableIRQ@{PB\_DisableIRQ}}
+\index{PB\_DisableIRQ@{PB\_DisableIRQ}!pushbuttons.h@{pushbuttons.h}}
+\doxysubsubsection{\texorpdfstring{PB\_DisableIRQ()}{PB\_DisableIRQ()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void P\+B\+\_\+\+Disable\+I\+RQ (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Disable G\+P\+IO for pushbutton interrupt. 
+
+\DoxyHorRuler{0}
+ \begin{DoxyNote}{Note}
+Status of the pushbuttons can still be read
+\end{DoxyNote}
+Pushbuttons can\textquotesingle{}t interrupt a task or wake the cpu anymore. \mbox{\Hypertarget{pushbuttons_8h_a251d22910eea6b84f863fb71255c1876}\label{pushbuttons_8h_a251d22910eea6b84f863fb71255c1876}} 
+\index{pushbuttons.h@{pushbuttons.h}!PB\_EnableIRQ@{PB\_EnableIRQ}}
+\index{PB\_EnableIRQ@{PB\_EnableIRQ}!pushbuttons.h@{pushbuttons.h}}
+\doxysubsubsection{\texorpdfstring{PB\_EnableIRQ()}{PB\_EnableIRQ()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE void P\+B\+\_\+\+Enable\+I\+RQ (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Enable G\+P\+IO for pushbutton interrupt. 
+
+\DoxyHorRuler{0}
+ \begin{DoxyNote}{Note}
+Already pending interrupt flags will also evoke the interrupt handler 
+\end{DoxyNote}
+\mbox{\Hypertarget{pushbuttons_8h_a4417c1639199f1b247a9419bdcace115}\label{pushbuttons_8h_a4417c1639199f1b247a9419bdcace115}} 
+\index{pushbuttons.h@{pushbuttons.h}!PB\_Status@{PB\_Status}}
+\index{PB\_Status@{PB\_Status}!pushbuttons.h@{pushbuttons.h}}
+\doxysubsubsection{\texorpdfstring{PB\_Status()}{PB\_Status()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+NE bool P\+B\+\_\+\+Status (\begin{DoxyParamCaption}\item[{G\+P\+I\+O\+\_\+\+Port\+\_\+\+Type\+Def}]{port,  }\item[{unsigned int}]{pin }\end{DoxyParamCaption})}
+
+
+
+Check the current status of the selected pushbutton. 
+
+\DoxyHorRuler{0}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em port} & of pushbutton \\
+\hline
+\mbox{\texttt{ in}}  & {\em pin} & of pushbutton \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true = pushbutton is pressed at this moment
+\end{DoxyReturn}
+This works independently of an interrupt, it just reads the input. 

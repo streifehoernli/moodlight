@@ -1,0 +1,20 @@
+digraph "UI_FSM_event"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="UI_FSM_event",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="User interface finite state machine: Checks for events."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="UI_FSM_event_Pushbutton",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a6aa0164fdca845cfa640d17e630f6d65",tooltip="Part of the user interface finite state machine: Pushbutton events."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="UI_FSM_event_RemoteControl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a8fb86f2839178b01686517fecdfdf3b6",tooltip="Part of the user interface finite state machine: Remote control events."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="COM_RX_Available",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$communication_8c.html#a432854d04e6bb697d5688acfdb367e27",tooltip="Check if a new string has been received."];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="COM_RX_GetData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$communication_8c.html#a83892c246e07863f8488c2b5eded4fca",tooltip="Get the received data from the serial interface."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="UI_FSM_event_Touch",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$userinterface_8c.html#a15f87a06f768b9692b824c10a9c709df",tooltip="Part of the user interface finite state machine: Touch events."];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="CAPSENSE_Sense",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$touchslider_8c.html#a053d58010d19241662916216a0327ad6",tooltip="This function iterates through all the capsensors and reads and initiates a reading...."];
+}

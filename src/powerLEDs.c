@@ -7,13 +7,26 @@
  *
  * Prefix: PWR
  *
- * @todo Write the description of the implemented LED driver solutions.
+ * There are two different solutions implemented:
+ *
+ * Solution 3 regulates the current by hardware. All that is needed in the software
+ * is a timer to generate a rectangular signal with 16kHz frequency. That signal
+ * sets the RS-FlipFlop. The circuit resets this FlipFlop as soon as the voltage
+ * over a shunt-resistor is higher than the DAC voltage set. With the level of
+ * the DAC voltage, the average LED current can be controlled.
+ *
+ * Solution 4 regulates the current also via the DAC output. For comparison of this
+ * output to the voltage over the shunt-resistor the ACMP is used. Whenever the
+ * shunt-resistor voltage is higher than the set DAC voltage an interrupt is set.
+ * This interrupt sets the gate of the MOSFET to LOW. Additionally, there is a Timer
+ * which sets the MOSFET gate with 16kHz frequency to HIGH.
+ *
  *
  * Board:  Starter Kit EFM32-G8XX-STK
  * Device: EFM32G890F128 (Gecko)
  *
- * @author Hanspeter Hochreutener (hhrt@zhaw.ch)
- * @date 15.7.2015
+ * @author schmiaa1@students.zhaw.ch, bodenma2@students.zhaw.ch
+ * @date 14.12.2020
  *****************************************************************************/
 #include "em_cmu.h"
 #include "em_gpio.h"
@@ -43,22 +56,7 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
  * Solution specific defines and variables
  *****************************************************************************/
 
-/** @todo Adapt PORTs and PINs for LED driver HW inputs and outputs. */
-
 /** ports and pins for LED drivers (with number of solution) */
-/**
-#define PWR_0_PWM_PORT		gpioPortC		///< Port of PWM for solution 0
-#define PWR_0_PWM_PIN			4			///< Pin of PWM for solution 0
-#define PWR_1_DAC_PORT		gpioPortB		///< Port of DAC for solution 1
-#define PWR_1_DAC_PIN			12			///< Pin of DAC for solution 1
-#define PWR_2_ADC_PORT		gpioPortD		///< Port of ADC for solution 2
-#define PWR_2_ADC_PIN			0			///< Pin of ADC for solution 2
-#define PWR_2_FET_PORT		gpioPortD		///< Port of FET for solution 2
-#define PWR_2_FET_PIN			1			///< Pin of FET for solution 2
-#define PWR_3_START_PORT	gpioPortD		///< Port of START for solution 3
-#define PWR_3_START_PIN		3			///< Pin of START for solution 3
-#define PWR_4_FET_PORT		gpioPortD		///< Port of FET for solution 4
-#define PWR_4_FET_PIN			2			///< Pin of FET for solution 4 */
 
 #define PWR_DAC_PORT    gpioPortB   ///< Port of DAC for solution 3 & 4
 #define PWR_3_DAC_PIN     11      ///< Pin of DAC for solution 3
@@ -72,13 +70,8 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 #define PWR_3_TIM0_PIN    1     ///< Pin of TIMER for solution 3
 #define PWR_4_TIM0_PIN    2     ///< Pin of TIMER for solution 4
 
-
-/** @todo Define all the solution specific defines. */
-
-#define DAC_MAX_VALUE_SOL3     4013   //4013 for 1.225V --> 0.375V after R1
-#define DAC_MAX_VALUE_SOL4     2000   //2293 for 0V 0.7V --> 0.35V after R12
-
-/** @todo Define all the solution specific variables.  */
+#define DAC_MAX_VALUE_SOL3     1900   ///<Maximum DAC value to regulate current to 350mA for sol. 3
+#define DAC_MAX_VALUE_SOL4     2293   ///<Maximum DAC value to regulate current to 350mA for sol. 4
 
 
 /** Avoid rounding issues in intermediate calculations
@@ -90,47 +83,48 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
  * @n Range of int32_t = -2'147'483'648 ... 2'147'483'647 */
 #define PWR_conversion_shift		12
 
-/** Conversion factor from user-interface-value to microcontroller-output.
- * Use integer data types only and right-shifts instead of divisions
- * for faster code execution (divisions are very time consuming).
- * @n output_value = (PWR_value * PWR_conversion_output) >> PWR_conversion_shift */
-/** @todo Define solution specific conversion factors. */
-const int32_t PWR_conversion_output[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
-
-/** Conversion factor from microcontroller-input user-interface-value.
- * Use integer data types only and right-shifts instead of divisions
- * for faster code execution (divisions are very time consuming).
- * @n PWR_value = (input_value * PWR_conversion_input) >> PWR_conversion_shift */
-/** @todo Define solution specific conversion factors. */
-const int32_t PWR_conversion_input[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
-
 
 /******************************************************************************
  * Functions
  *****************************************************************************/
 
 /** ***************************************************************************
- * @brief Set, clear and toggle a GPIO
+ * @brief Set a GPIO pin
  * @param [in] port of GPIO
  * @param [in] pin of GPIO
  *****************************************************************************/
-// GPIO set function
 void GPIO_setPin(uint32_t port, uint32_t pin) {
-  GPIO_PinOutSet(port, pin);      // using EMLIB function
-  GPIO->P[port].DOUTSET = 1 << pin; // same but with CMSIS (faster)
+  GPIO->P[port].DOUTSET = 1 << pin;
 }
-// GPIO clear function
+
+/** ***************************************************************************
+ * @brief clear a GPIO pin
+ * @param [in] port of GPIO
+ * @param [in] pin of GPIO
+ *****************************************************************************/
 void GPIO_clearPin(uint32_t port, uint32_t pin) {
-  GPIO_PinOutClear(port, pin);    // using EMLIB function
-  GPIO->P[port].DOUTCLR = 1 << pin; // same but with CMSIS (faster)
+  GPIO->P[port].DOUTCLR = 1 << pin;
 }
 
 
+/** ***************************************************************************
+ * @brief clear a GPIO pin
+ * @param [in] port of GPIO
+ *****************************************************************************/
 void DAC0_CH0_write(uint32_t value_out) {
-  DAC0->CH0DATA = value_out;        // output value for channel 0
+  if(value_out > DAC_MAX_VALUE_SOL3) {
+      DAC0->CH0DATA = DAC_MAX_VALUE_SOL3;
+  } else {
+      DAC0->CH0DATA = value_out;        // output value for channel 0
+  }
 }
+
 void DAC0_CH1_write(uint32_t value_out) {
-  DAC0->CH1DATA = value_out;        // output value for channel 1
+  if(value_out > DAC_MAX_VALUE_SOL3) {
+        DAC0->CH1DATA = DAC_MAX_VALUE_SOL4;
+    } else {
+        DAC0->CH1DATA = value_out;        // output value for channel 1
+    }
 }
 /** ***************************************************************************
  * @brief Initialize DAC0 channel 1
@@ -236,11 +230,11 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 			break;
 		case 3:
 			/** @todo Calculate and set DAC Value of solution 3. */
-		  DAC0_CH0_write((value*64460)>>12);
+		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift);
 			break;
 		case 4:
 			/** @todo Calculate and set DAC Value for solution 4. */
-		  DAC0_CH1_write((value*36832)>>12);
+		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);
 			break;
 		}
 	}
@@ -276,7 +270,7 @@ void PWR_init(void) {
 	//32Mhz Clock -> 32kHz -> value 1000
 	//Dutycycle solution 3 = 1/2 -> value 500
 	//Dutycycle solution 4 = 1/5 -> value 200
-	TIMER0_PWM_init(2000, 1000);
+	TIMER0_PWM_init(1500, 750);
 
 
 	//Pulldown Output for Timers (solution 3 & 4)
@@ -312,7 +306,11 @@ void TIMER0_IRQHandler(void) {
 	 * calculate and set LED driver current for the HW,
 	 * if applicable. */
 	//set output pin
-	GPIO_setPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
+	if(GPIO_PinOutGet(PWR_TIM0_PORT, PWR_4_TIM0_PIN) == 0) {
+	    GPIO_setPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
+	} else {
+	    GPIO_clearPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
+	}
 
 	SL_Off(SL_0_PORT, SL_0_PIN);				// stop for timing measurement
 }
@@ -330,12 +328,11 @@ void TIMER0_IRQHandler(void) {
  *****************************************************************************/
 void PWR_ACMP_IRQHandler(void) {
 	if (ACMP0->IF & ACMP_IFC_EDGE) {		// edge on ACMP0 detected
+    GPIO->P[PWR_TIM0_PORT].DOUTCLR = 1 << PWR_4_TIM0_PIN;
 		ACMP0->IFC = ACMP_IFC_EDGE;			// clear interrupt flag
 
 		/** @todo Only needed, if ACMP0 is used in one solution.
 		 * The whole function can be deleted otherwise. */
-		//clear output pin
-		GPIO_clearPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
 	}
 }
 
