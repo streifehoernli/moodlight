@@ -9,8 +9,6 @@
 /******************************************************************************
  * Defines
  *****************************************************************************/
-
-/** @todo Adjust number of power LED drivers */
 #define PWR_SOLUTION_COUNT		5			///< number of power LED drivers
 
 #define PWR_VALUE_MAX			255			///< max value for set points

@@ -108,8 +108,8 @@ void GPIO_clearPin(uint32_t port, uint32_t pin) {
 
 
 /** ***************************************************************************
- * @brief clear a GPIO pin
- * @param [in] port of GPIO
+ * @brief set DAC0 value for channel 0
+ * @param [in] value to be converted into analog signal
  *****************************************************************************/
 void DAC0_CH0_write(uint32_t value_out) {
   if(value_out > DAC_MAX_VALUE_SOL3) {
@@ -119,6 +119,10 @@ void DAC0_CH0_write(uint32_t value_out) {
   }
 }
 
+/** ***************************************************************************
+ * @brief set DAC0 value for channel 1
+ * @param [in] value to be converted into analog signal
+ *****************************************************************************/
 void DAC0_CH1_write(uint32_t value_out) {
   if(value_out > DAC_MAX_VALUE_SOL3) {
         DAC0->CH1DATA = DAC_MAX_VALUE_SOL4;
@@ -127,7 +131,7 @@ void DAC0_CH1_write(uint32_t value_out) {
     }
 }
 /** ***************************************************************************
- * @brief Initialize DAC0 channel 1
+ * @brief Initialize DAC0 channel 0 and 1
  *
  *****************************************************************************/
 void DAC0_init(void) {
@@ -160,8 +164,8 @@ void DAC0_init(void) {
 /** ***************************************************************************
  * @brief Initialize TIMER0 in PWM mode and activate overflow interrupt.
  * @param [in] value_top = PWM period time
- * @param [in] value_compare = PWM active time of channel 0
- * duty_cycle = value_compare / value_top
+ * @param [in] value_compare_CC0 = PWM active time of channel 0
+ * duty_cycle = value_compare_CC0 / value_top
  * @n 3 compare/capture channels are available on this timer.
  *****************************************************************************/
 void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0) {
@@ -188,7 +192,7 @@ void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0) {
 
 /** ***************************************************************************
  * @brief Initialize comparator ACMP0 and activate rising edge interrupt.
- * @n Compare input on channel 5 with scaled portion of VDD
+ * @n Compare input on channel 5 with input on channel 4
  *****************************************************************************/
 void ACMP0_init(void) {
   CMU_ClockEnable(cmuClock_ACMP0, true);  // enable ACMP clock
@@ -199,7 +203,7 @@ void ACMP0_init(void) {
   ACMPinit.vddLevel = 0;          // comparator level = 0
   ACMP_Init(ACMP0, &ACMPinit);      // write configuration to registers
 
-  /* Compare scaled portion of channel4 with voltage at input channel 5 */
+  /* Compare channel4 with voltage at input channel 5 */
   ACMP_ChannelSet(ACMP0, acmpChannel4, acmpChannel5);
   NVIC_ClearPendingIRQ(ACMP0_IRQn);   // clear pending comparator interrupts
   ACMP_IntEnable(ACMP0, ACMP_IEN_EDGE); // interrupt on edge detection
@@ -220,21 +224,16 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		PWR_value[solution] = value;
 		switch (solution) {
 		case 0:
-			/** @todo Calculate and set LED driver current for this HW solution. */
 			break;
 		case 1:
-			/** @todo Calculate and set LED driver current for this HW solution. */
 			break;
 		case 2:
-			/** @todo Calculate and set LED driver current for this HW solution. */
 			break;
 		case 3:
-			/** @todo Calculate and set DAC Value of solution 3. */
-		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift);
+		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift); ///< calculated and set DAC value of solution 3
 			break;
 		case 4:
-			/** @todo Calculate and set DAC Value for solution 4. */
-		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);
+		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);  ///< calculated and set DAC value of solution 4
 			break;
 		}
 	}
@@ -263,9 +262,6 @@ uint32_t PWR_get_value(uint32_t solution) {
  *****************************************************************************/
 void PWR_init(void) {
 	CMU_ClockEnable(cmuClock_GPIO, true);	// enable GPIO clock
-
-	/** @todo Initialize the microcontroller peripherals
-	 * for each LED driver solution. */
 
 	//32Mhz Clock -> 32kHz -> value 1000
 	//Dutycycle solution 3 = 1/2 -> value 500
@@ -302,9 +298,6 @@ void TIMER0_IRQHandler(void) {
 
 	TIMER0->IFC = TIMER_IFC_OF;				// clear overflow interrupt flag
 
-	/** @todo Execute solution specific control loops,
-	 * calculate and set LED driver current for the HW,
-	 * if applicable. */
 	//set output pin
 	if(GPIO_PinOutGet(PWR_TIM0_PORT, PWR_4_TIM0_PIN) == 0) {
 	    GPIO_setPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
@@ -330,9 +323,6 @@ void PWR_ACMP_IRQHandler(void) {
 	if (ACMP0->IF & ACMP_IFC_EDGE) {		// edge on ACMP0 detected
     GPIO->P[PWR_TIM0_PORT].DOUTCLR = 1 << PWR_4_TIM0_PIN;
 		ACMP0->IFC = ACMP_IFC_EDGE;			// clear interrupt flag
-
-		/** @todo Only needed, if ACMP0 is used in one solution.
-		 * The whole function can be deleted otherwise. */
 	}
 }
 
