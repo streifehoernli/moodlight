@@ -58,21 +58,14 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 
 /** ports and pins for LED drivers (with number of solution) */
 
-#define PWR_DAC_PORT    gpioPortB   ///< Port of DAC for solution 3 & 4
-#define PWR_3_DAC_PIN     11      ///< Pin of DAC for solution 3
-#define PWR_4_DAC_PIN     12      ///< Pin of DAC for solution 3
 
-#define PWR_ACMP_PORT		gpioPortC		///< Port of ACMP for solution 4
-#define PWR_4_ACMP_PIN_NEG		5			///< Pin of ACMP- for solution 4
-#define PWR_4_ACMP_PIN_POS    4     ///< Pin of ACMP- for solution 4
+#define PWR_TIM0_PORT      gpioPortD   ///< Port of TIMERs (Red,Green,Blue)
+#define PWR_RED_TIM_PIN      1     ///< Pin of TIMER for RED
+#define PWR_GREEN_TIM_PIN    2     ///< Pin of TIMER for Green
+#define PWR_BLUE_TIM_PIN     3     ///< Pin of TIMER for Blue
 
-#define PWR_TIM0_PORT   gpioPortD   ///< Port of TIMERs for solution 3 & 4
-#define PWR_3_TIM0_PIN    1     ///< Pin of TIMER for solution 3
-#define PWR_4_TIM0_PIN    2     ///< Pin of TIMER for solution 4
-
-#define DAC_MAX_VALUE_SOL3     1900   ///<Maximum DAC value to regulate current to 350mA for sol. 3
-#define DAC_MAX_VALUE_SOL4     2293   ///<Maximum DAC value to regulate current to 350mA for sol. 4
-
+#define PWR_LE_TIM0_PORT   gpioPortB   ///< Port of TIMERs for White
+#define PWR_WHITE_TIM_PIN    11       ///< Pin of TIMER for White
 
 /** Avoid rounding issues in intermediate calculations
  * by left-shifting input values first,
@@ -107,59 +100,6 @@ void GPIO_clearPin(uint32_t port, uint32_t pin) {
 }
 
 
-/** ***************************************************************************
- * @brief set DAC0 value for channel 0
- * @param [in] value to be converted into analog signal
- *****************************************************************************/
-void DAC0_CH0_write(uint32_t value_out) {
-  if(value_out > DAC_MAX_VALUE_SOL3) {
-      DAC0->CH0DATA = DAC_MAX_VALUE_SOL3;
-  } else {
-      DAC0->CH0DATA = value_out;        // output value for channel 0
-  }
-}
-
-/** ***************************************************************************
- * @brief set DAC0 value for channel 1
- * @param [in] value to be converted into analog signal
- *****************************************************************************/
-void DAC0_CH1_write(uint32_t value_out) {
-  if(value_out > DAC_MAX_VALUE_SOL3) {
-        DAC0->CH1DATA = DAC_MAX_VALUE_SOL4;
-    } else {
-        DAC0->CH1DATA = value_out;        // output value for channel 1
-    }
-}
-/** ***************************************************************************
- * @brief Initialize DAC0 channel 0 and 1
- *
- *****************************************************************************/
-void DAC0_init(void) {
-  /* DAC_clock_frequency < 1MHz */
-    uint32_t ADC_clock_frequency = 1000000; // 1MHz is the upper limit
-    CMU_ClockEnable(cmuClock_DAC0, true); // enable DAC clock
-    /* load default values for general DAC configuration */
-    DAC_Init_TypeDef DACinit = DAC_INIT_DEFAULT;
-    /* calculate the prescaler value */
-    DACinit.prescale = DAC_PrescaleCalc(ADC_clock_frequency, 0);
-    DACinit.reference = dacRef1V25;      // use internal 1.25V reference
-    DAC_Init(DAC0, &DACinit);       // write configuration registers
-    /* load default values for DAC channel configuration */
-    DAC_InitChannel_TypeDef DACinitChannel = DAC_INITCHANNEL_DEFAULT;
-
-    //Channel 0 (Solution 3)
-    DAC_InitChannel(DAC0, &DACinitChannel, 0);  // write channel 0 configuration
-    DAC_Enable(DAC0, 0, true);        // enable channel 0
-    DAC0->CH0DATA = DAC_MAX_VALUE_SOL3;
-
-    //Channel 1 (Solution 4)
-    DAC_InitChannel(DAC0, &DACinitChannel, 1);  // write channel 1 configuration
-    DAC_Enable(DAC0, 1, true);        // enable channel 1
-    DAC0->CH1DATA = DAC_MAX_VALUE_SOL4;   // output value for channel 1
-}
-
-
-
 
 /** ***************************************************************************
  * @brief Initialize TIMER0 in PWM mode and activate overflow interrupt.
@@ -168,21 +108,35 @@ void DAC0_init(void) {
  * duty_cycle = value_compare_CC0 / value_top
  * @n 3 compare/capture channels are available on this timer.
  *****************************************************************************/
-void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0) {
+void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
   CMU_ClockEnable(cmuClock_TIMER0, true); // enable timer clock
   /* load default values for general TIMER configuration (both solutions)*/
   TIMER_Init_TypeDef timerInit = TIMER_INIT_DEFAULT;
   TIMER_Init(TIMER0, &timerInit);     // init and start the timer
   TIMER_TopSet(TIMER0, value_top);    // TOP defines PWM period
 
-  // CC inititalization for both solutions
+  // CC inititalization for all channels
   TIMER_InitCC_TypeDef timerInitCC = TIMER_INITCC_DEFAULT;
   /* load values for CC0 compare/capture channel configuration, solution 3 */
   timerInitCC.mode = timerCCModePWM;    // configure as PWM channel
+
+  //CC0 - Red
   TIMER_InitCC(TIMER0, 0, &timerInitCC);  // CC channel 0 is used
-  TIMER_CompareSet(TIMER0, 0, value_compare_CC0); // CC value defines PWM active time
+  TIMER_CompareSet(TIMER0, 0, value_compare); // CC value defines PWM active time
   /* route output to location #3 and enable output CC0 */
   TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC0PEN);
+
+  //CC1 - Green
+  TIMER_InitCC(TIMER0, 1, &timerInitCC);  // CC channel 0 is used
+  TIMER_CompareSet(TIMER0, 1, value_compare); // CC value defines PWM active time
+  /* route output to location #3 and enable output CC1 */
+  TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC1PEN);
+
+  //CC2 - Blue
+  TIMER_InitCC(TIMER0, 2, &timerInitCC);  // CC channel 0 is used
+  TIMER_CompareSet(TIMER0, 2, value_compare); // CC value defines PWM active time
+  /* route output to location #3 and enable output CC2 */
+  TIMER0 ->ROUTE |= (TIMER_ROUTE_LOCATION_LOC3 | TIMER_ROUTE_CC2PEN);
 
   NVIC_ClearPendingIRQ(TIMER0_IRQn);    // clear pending timer interrupts
   TIMER_IntEnable(TIMER0, TIMER_IF_OF); // enable timer overflow interrupt
@@ -190,25 +144,29 @@ void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare_CC0) {
 
 }
 
-/** ***************************************************************************
- * @brief Initialize comparator ACMP0 and activate rising edge interrupt.
- * @n Compare input on channel 5 with input on channel 4
- *****************************************************************************/
-void ACMP0_init(void) {
-  CMU_ClockEnable(cmuClock_ACMP0, true);  // enable ACMP clock
-  /* load default values for general ACMP configuration */
-  ACMP_Init_TypeDef ACMPinit = ACMP_INIT_DEFAULT;
-  ACMPinit.interruptOnRisingEdge = true;  // detect rising edge only
-  ACMPinit.hysteresisLevel = acmpHysteresisLevel1;  // 15mV hysteresis
-  ACMPinit.vddLevel = 0;          // comparator level = 0
-  ACMP_Init(ACMP0, &ACMPinit);      // write configuration to registers
-
-  /* Compare channel4 with voltage at input channel 5 */
-  ACMP_ChannelSet(ACMP0, acmpChannel4, acmpChannel5);
-  NVIC_ClearPendingIRQ(ACMP0_IRQn);   // clear pending comparator interrupts
-  ACMP_IntEnable(ACMP0, ACMP_IEN_EDGE); // interrupt on edge detection
-  NVIC_EnableIRQ(ACMP0_IRQn);       // enable comparator interrupts
+void LETIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
+  CMU_ClockEnable(cmuClock_LETIMER0, true); // enable timer clock
+  LETIMER0->COMP0 = value_top;      // define PWM period
+  LETIMER0->COMP1 = value_compare;    // define PWM active time
+  LETIMER0->REP0 = 1;           // must be nonzero, probably a bug
+  LETIMER0->REP1 = 1;           // must be nonzero, probably a bug
+  /* enable output 0 and route it to location 3 */
+  LETIMER0->ROUTE = LETIMER_ROUTE_OUT0PEN | LETIMER_ROUTE_LOCATION_LOC3;
+  /* Load COMP0 (= TOP value) into CNT register on counter underflow
+   * and use PWM mode for output 0 */
+  LETIMER0->CTRL = LETIMER_CTRL_COMP0TOP | LETIMER_CTRL_UFOA0_PWM;
+  LETIMER0->CMD = LETIMER_CMD_START;    // start the timer
 }
+
+
+/** ***************************************************************************
+ * @brief Change duty cycle of LETIMER0 in PWM mode.
+ * @param [in] value_compare new PWM active time
+ *****************************************************************************/
+void LETIMER0_PWM_change(uint32_t value_compare) {
+  LETIMER0->COMP1 = value_compare;    // Set PWM compare value
+}
+
 
 /** ***************************************************************************
  * @brief Set the set point of the selected power LED driver.
@@ -230,10 +188,10 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		case 2:
 			break;
 		case 3:
-		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift); ///< calculated and set DAC value of solution 3
+//		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift); ///< calculated and set DAC value of solution 3
 			break;
 		case 4:
-		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);  ///< calculated and set DAC value of solution 4
+//		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);  ///< calculated and set DAC value of solution 4
 			break;
 		}
 	}
@@ -263,24 +221,18 @@ uint32_t PWR_get_value(uint32_t solution) {
 void PWR_init(void) {
 	CMU_ClockEnable(cmuClock_GPIO, true);	// enable GPIO clock
 
-	//32Mhz Clock -> 32kHz -> value 1000
-	//Dutycycle solution 3 = 1/2 -> value 500
-	//Dutycycle solution 4 = 1/5 -> value 200
-	TIMER0_PWM_init(1500, 750);
+	//32Mhz Clock -> 500Hz -> 64000, with dutycycle 1/2 (32000)
+	TIMER0_PWM_init(64000, 32000);
+
+  //32768 Hz Clock -> 500Hz -> 66, with dutycycle 1/2 (33)
+	LETIMER0_PWM_init(66,33);
 
 
-	//Pulldown Output for Timers (solution 3 & 4)
-	GPIO_PinModeSet(PWR_TIM0_PORT, PWR_3_TIM0_PIN, gpioModePushPull, 0);
-	GPIO_PinModeSet(PWR_TIM0_PORT, PWR_4_TIM0_PIN, gpioModePushPull, 0);
-	//ACMP Init (solution 3 & 4)
-	GPIO_PinModeSet(PWR_ACMP_PORT, PWR_4_ACMP_PIN_POS, gpioModeInput, 0);
-  GPIO_PinModeSet(PWR_ACMP_PORT, PWR_4_ACMP_PIN_NEG, gpioModeInputPull, 0);
-
-	//DAC Max value = 4013 for 0.375V when 1.25V reference is used for solution 3
-	//DAC Max value = 0 for 0.0V when 1.25V reference is used for solution 4
-	DAC0_init();
-
-	ACMP0_init();
+	//Pulldown Output for Timers
+	GPIO_PinModeSet(PWR_TIM0_PORT, PWR_RED_TIM_PIN, gpioModePushPull, 0);
+	GPIO_PinModeSet(PWR_TIM0_PORT, PWR_GREEN_TIM_PIN, gpioModePushPull, 0);
+  GPIO_PinModeSet(PWR_TIM0_PORT, PWR_BLUE_TIM_PIN, gpioModePushPull, 0);
+  GPIO_PinModeSet(PWR_LE_TIM0_PORT, PWR_WHITE_TIM_PIN, gpioModePushPull, 0);
 
 }
 
@@ -298,13 +250,6 @@ void TIMER0_IRQHandler(void) {
 
 	TIMER0->IFC = TIMER_IFC_OF;				// clear overflow interrupt flag
 
-	//set output pin
-	if(GPIO_PinOutGet(PWR_TIM0_PORT, PWR_4_TIM0_PIN) == 0) {
-	    GPIO_setPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
-	} else {
-	    GPIO_clearPin(PWR_TIM0_PORT, PWR_4_TIM0_PIN);
-	}
-
 	SL_Off(SL_0_PORT, SL_0_PIN);				// stop for timing measurement
 }
 
@@ -320,10 +265,7 @@ void TIMER0_IRQHandler(void) {
  * @n As part of an interrupt handler this is a time critical section.
  *****************************************************************************/
 void PWR_ACMP_IRQHandler(void) {
-	if (ACMP0->IF & ACMP_IFC_EDGE) {		// edge on ACMP0 detected
-    GPIO->P[PWR_TIM0_PORT].DOUTCLR = 1 << PWR_4_TIM0_PIN;
-		ACMP0->IFC = ACMP_IFC_EDGE;			// clear interrupt flag
-	}
+  if (ACMP0->IF & ACMP_IFC_EDGE) {    // edge on ACMP0 detected
+    ACMP0->IFC = ACMP_IFC_EDGE;     // clear interrupt flag
+  }
 }
-
-
