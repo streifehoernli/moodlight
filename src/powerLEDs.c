@@ -187,9 +187,9 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		PWR_value[solution] = value;
 		switch (solution) {
 		case 0:
+      LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift);
 			break;
 		case 1:
-		  LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift);
 			break;
 		case 2:
 		case 3:
