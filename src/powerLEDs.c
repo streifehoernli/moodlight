@@ -194,7 +194,7 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		case 2:
 		case 3:
 		case 4:
-      TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift);
+      TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2);
 			break;
 		}
 	}
