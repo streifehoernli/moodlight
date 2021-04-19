@@ -64,8 +64,8 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 #define PWR_GREEN_TIM_PIN    2     ///< Pin of TIMER for Green
 #define PWR_BLUE_TIM_PIN     3     ///< Pin of TIMER for Blue
 
-#define PWR_LE_TIM0_PORT   gpioPortB   ///< Port of TIMERs for White
-#define PWR_WHITE_TIM_PIN    11       ///< Pin of TIMER for White
+#define PWR_LE_TIM0_PORT   gpioPortC   ///< Port of TIMERs for White
+#define PWR_WHITE_TIM_PIN    4       ///< Pin of TIMER for White
 
 /** Avoid rounding issues in intermediate calculations
  * by left-shifting input values first,
@@ -144,6 +144,11 @@ void TIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
 
 }
 
+void TIMER0_PWM_change(uint32_t value_compare, uint32_t cc) {
+  TIMER0->CC[cc].CCV = value_compare;    // Set PWM compare value on CC channel 0
+}
+
+
 void LETIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
   CMU_ClockEnable(cmuClock_LETIMER0, true); // enable timer clock
   LETIMER0->COMP0 = value_top;      // define PWM period
@@ -184,14 +189,12 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		case 0:
 			break;
 		case 1:
+		  LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift);
 			break;
 		case 2:
-			break;
 		case 3:
-//		  DAC0_CH0_write((value*30000)>>PWR_conversion_shift); ///< calculated and set DAC value of solution 3
-			break;
 		case 4:
-//		  DAC0_CH1_write((value*36832)>>PWR_conversion_shift);  ///< calculated and set DAC value of solution 4
+      TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift);
 			break;
 		}
 	}
