@@ -64,8 +64,8 @@ int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 #define PWR_GREEN_TIM_PIN    2     ///< Pin of TIMER for Green
 #define PWR_BLUE_TIM_PIN     3     ///< Pin of TIMER for Blue
 
-#define PWR_LE_TIM0_PORT   gpioPortC   ///< Port of TIMERs for White
-#define PWR_WHITE_TIM_PIN    4       ///< Pin of TIMER for White
+#define PWR_LE_TIM0_PORT   gpioPortB   ///< Port of TIMERs for White
+#define PWR_WHITE_TIM_PIN    11       ///< Pin of TIMER for White
 
 /** Avoid rounding issues in intermediate calculations
  * by left-shifting input values first,
@@ -156,7 +156,7 @@ void LETIMER0_PWM_init(uint32_t value_top, uint32_t value_compare) {
   LETIMER0->REP0 = 1;           // must be nonzero, probably a bug
   LETIMER0->REP1 = 1;           // must be nonzero, probably a bug
   /* enable output 0 and route it to location 3 */
-  LETIMER0->ROUTE = LETIMER_ROUTE_OUT0PEN | LETIMER_ROUTE_LOCATION_LOC3;
+  LETIMER0->ROUTE = LETIMER_ROUTE_OUT0PEN | LETIMER_ROUTE_LOCATION_LOC1;
   /* Load COMP0 (= TOP value) into CNT register on counter underflow
    * and use PWM mode for output 0 */
   LETIMER0->CTRL = LETIMER_CTRL_COMP0TOP | LETIMER_CTRL_UFOA0_PWM;
