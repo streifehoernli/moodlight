@@ -45,20 +45,25 @@
 /******************************************************************************
  * Defines and variables
  *****************************************************************************/
+#define LAMP_OFF    0
+#define LAMP_ON     1
 
 /** Actual set points for values */
 int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 
-#define PWR_current_max			350			///< Max current in mA
+uint32_t clapTimeOn = 0;
+uint32_t clapCounter = 0;
+uint8_t lampState = LAMP_ON;
 
+#define PWR_current_max			350			///< Max current in mA
 
 /******************************************************************************
  * Solution specific defines and variables
  *****************************************************************************/
 
 /** ports and pins for LED drivers (with number of solution) */
-
-
+#define CLAP_SENSE_PORT    gpioPortD
+#define CLAP_SENSE_PIN    6
 #define PWR_TIM0_PORT      gpioPortD   ///< Port of TIMERs (Red,Green,Blue)
 #define PWR_RED_TIM_PIN      1     ///< Pin of TIMER for RED
 #define PWR_GREEN_TIM_PIN    2     ///< Pin of TIMER for Green
@@ -97,6 +102,15 @@ void GPIO_setPin(uint32_t port, uint32_t pin) {
  *****************************************************************************/
 void GPIO_clearPin(uint32_t port, uint32_t pin) {
   GPIO->P[port].DOUTCLR = 1 << pin;
+}
+
+/** ***************************************************************************
+ * @brief read a GPIO pin
+ * @param [in] port of GPIO
+ * @param [in] pin of GPIO
+ *****************************************************************************/
+uint32_t GPIO_readPin(uint32_t port, uint32_t pin) {
+  return GPIO->P[port].DIN && 1 << pin;
 }
 
 
@@ -172,7 +186,6 @@ void LETIMER0_PWM_change(uint32_t value_compare) {
   LETIMER0->COMP1 = value_compare;    // Set PWM compare value
 }
 
-
 /** ***************************************************************************
  * @brief Set the set point of the selected power LED driver.
  * @param [in] solution number
@@ -187,14 +200,14 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		PWR_value[solution] = value;
 		switch (solution) {
 		case 0:
-      LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift);
+		  lampState == LAMP_ON ? LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift): LETIMER0_PWM_change(0);
 			break;
 		case 1:
 			break;
 		case 2:
 		case 3:
 		case 4:
-      TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2);
+		  lampState == LAMP_ON ? TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2) : TIMER0_PWM_change(0);
 			break;
 		}
 	}
@@ -236,7 +249,7 @@ void PWR_init(void) {
 	GPIO_PinModeSet(PWR_TIM0_PORT, PWR_GREEN_TIM_PIN, gpioModePushPull, 0);
   GPIO_PinModeSet(PWR_TIM0_PORT, PWR_BLUE_TIM_PIN, gpioModePushPull, 0);
   GPIO_PinModeSet(PWR_LE_TIM0_PORT, PWR_WHITE_TIM_PIN, gpioModePushPull, 0);
-
+  GPIO_PinModeSet(CLAP_SENSE_PORT, CLAP_SENSE_PIN, gpioModeInput, 0);
 }
 
 /** ***************************************************************************
@@ -252,6 +265,21 @@ void TIMER0_IRQHandler(void) {
 	SL_On(SL_0_PORT, SL_0_PIN);				// start for timing measurement
 
 	TIMER0->IFC = TIMER_IFC_OF;				// clear overflow interrupt flag
+	if (!GPIO_readPin(CLAP_SENSE_PORT,CLAP_SENSE_PIN)) {
+	    clapTimeOn += 1;
+	} else {
+	    if (clapTimeOn > 10 || clapTimeOn < 1) {
+	        clapCounter = 0;
+	    } else {
+          clapCounter += 1;
+	    }
+      clapTimeOn = 0;
+	}
+
+	if (clapCounter >= 2) {
+	    clapCounter = 0;
+	    lampState = !lampState;
+	}
 
 	SL_Off(SL_0_PORT, SL_0_PIN);				// stop for timing measurement
 }
