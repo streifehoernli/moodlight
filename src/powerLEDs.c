@@ -110,7 +110,7 @@ void GPIO_clearPin(uint32_t port, uint32_t pin) {
  * @param [in] pin of GPIO
  *****************************************************************************/
 uint32_t GPIO_readPin(uint32_t port, uint32_t pin) {
-  return GPIO->P[port].DIN && 1 << pin;
+  return (GPIO->P[port].DIN & (1 << pin)) >> pin;
 }
 
 
@@ -207,7 +207,7 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		case 2:
 		case 3:
 		case 4:
-		  lampState == LAMP_ON ? TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2) : TIMER0_PWM_change(0);
+		  lampState == LAMP_ON ? TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2) : TIMER0_PWM_change(0,solution-2);
 			break;
 		}
 	}
