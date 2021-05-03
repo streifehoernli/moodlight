@@ -45,15 +45,19 @@
 /******************************************************************************
  * Defines and variables
  *****************************************************************************/
-#define LAMP_OFF    0
-#define LAMP_ON     1
+#define LAMP_OFF    false
+#define LAMP_ON     true
 
 /** Actual set points for values */
 int32_t PWR_value[PWR_SOLUTION_COUNT] = { 0, 0, 0, 0, 0 };
 
-uint32_t clapTimeOn = 0;
-uint32_t clapCounter = 0;
-uint8_t lampState = LAMP_ON;
+volatile uint32_t clapTimeOn = 0;
+volatile uint32_t clapCounter = 0;
+volatile static bool lampState = LAMP_ON;
+
+bool getLampState(){
+  return lampState;
+}
 
 #define PWR_current_max			350			///< Max current in mA
 
@@ -63,7 +67,7 @@ uint8_t lampState = LAMP_ON;
 
 /** ports and pins for LED drivers (with number of solution) */
 #define CLAP_SENSE_PORT    gpioPortD
-#define CLAP_SENSE_PIN    6
+#define CLAP_SENSE_PIN       6
 #define PWR_TIM0_PORT      gpioPortD   ///< Port of TIMERs (Red,Green,Blue)
 #define PWR_RED_TIM_PIN      1     ///< Pin of TIMER for RED
 #define PWR_GREEN_TIM_PIN    2     ///< Pin of TIMER for Green
@@ -200,17 +204,31 @@ void PWR_set_value(uint32_t solution, int32_t value) {
 		PWR_value[solution] = value;
 		switch (solution) {
 		case 0:
-		  lampState == LAMP_ON ? LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift): LETIMER0_PWM_change(0);
+      LETIMER0_PWM_change((value*1060)>>PWR_conversion_shift);
 			break;
 		case 1:
 			break;
 		case 2:
 		case 3:
 		case 4:
-		  lampState == LAMP_ON ? TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2) : TIMER0_PWM_change(0,solution-2);
+      TIMER0_PWM_change((value*1028015)>>PWR_conversion_shift,solution-2);
 			break;
 		}
 	}
+}
+
+void lightOnOrOff(){
+  if(lampState){
+      LETIMER0_PWM_change((PWR_value[0]*1060)>>PWR_conversion_shift);
+      TIMER0_PWM_change((PWR_value[2]*1028015)>>PWR_conversion_shift,0);
+      TIMER0_PWM_change((PWR_value[3]*1028015)>>PWR_conversion_shift,1);
+      TIMER0_PWM_change((PWR_value[4]*1028015)>>PWR_conversion_shift,2);
+  } else {
+      LETIMER0_PWM_change(0);
+      TIMER0_PWM_change(0,0);
+      TIMER0_PWM_change(0,1);
+      TIMER0_PWM_change(0,2);
+  }
 }
 
 
@@ -264,22 +282,22 @@ void PWR_init(void) {
 void TIMER0_IRQHandler(void) {
 	SL_On(SL_0_PORT, SL_0_PIN);				// start for timing measurement
 
-	TIMER0->IFC = TIMER_IFC_OF;				// clear overflow interrupt flag
+
 	if (!GPIO_readPin(CLAP_SENSE_PORT,CLAP_SENSE_PIN)) {
 	    clapTimeOn += 1;
 	} else {
-	    if (clapTimeOn > 10 || clapTimeOn < 1) {
-	        clapCounter = 0;
-	    } else {
-          clapCounter += 1;
+	    if (!(clapTimeOn > 10 || clapTimeOn < 1)) {
+	        clapCounter += 1;
 	    }
       clapTimeOn = 0;
 	}
 
-	if (clapCounter >= 2) {
-	    clapCounter = 0;
+	if (clapTimeOn >= 1) {
 	    lampState = !lampState;
+      clapCounter = 0;
 	}
+
+  TIMER0->IFC = TIMER_IFC_OF;       // clear overflow interrupt flag
 
 	SL_Off(SL_0_PORT, SL_0_PIN);				// stop for timing measurement
 }

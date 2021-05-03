@@ -145,6 +145,6 @@ int main(void) {
 	  SL_Toggle(SL_3_PORT, SL_3_PIN);	// can be used for oscilloscope synch.
 	  UI_FSM_event();					// check for events
 	  UI_FSM_state_value();				// handles the events
+	  lightOnOrOff();
   }
-
 }

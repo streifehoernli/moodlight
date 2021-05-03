@@ -30,4 +30,8 @@ void PWR_init(void);
 
 void PWR_ACMP_IRQHandler(void);
 
+void lightOnOrOff(void);
+
+
+
 #endif
